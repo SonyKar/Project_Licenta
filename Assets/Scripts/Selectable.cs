@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class Clickable : MonoBehaviour
+public class Selectable : MonoBehaviour
 {
-    private void OnMouseDown()
+    public void OnSelect()
     {
         Debug.Log("My name is: " + gameObject.name);
     }
