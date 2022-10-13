@@ -32,6 +32,10 @@ public class Controller : MonoBehaviour
         
         if (clickedObjectSelectable != null)
         {
+            if (gameplay.selectedObject != null)
+            {
+                gameplay.selectedObject.GetComponent<Selectable>().OnDeselect();
+            }
             gameplay.SetSelectedObject(clickedObject);
             clickedObjectSelectable.OnSelect();
         }

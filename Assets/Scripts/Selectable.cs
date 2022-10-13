@@ -2,8 +2,14 @@ using UnityEngine;
 
 public class Selectable : MonoBehaviour
 {
+    [SerializeField] private GameObject highlight;
     public void OnSelect()
     {
-        Debug.Log("My name is: " + gameObject.name);
+        highlight.SetActive(true);
+    }
+    
+    public void OnDeselect()
+    {
+        highlight.SetActive(false);
     }
 }
