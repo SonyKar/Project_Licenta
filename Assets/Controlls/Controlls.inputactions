@@ -15,6 +15,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "Rotate Camera",
+                    "type": "Value",
+                    "id": "043f1316-e12e-49a3-96e2-9cb32be0b9bc",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "Perform Action",
                     "type": "Button",
                     "id": "3d07d855-b12c-453e-a0ed-0fa3b46bea1c",
@@ -229,6 +238,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Select Actor",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bece40ba-1ff4-4c68-a88a-af998332359e",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Rotate Camera",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

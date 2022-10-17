@@ -48,6 +48,15 @@ public class Controller : MonoBehaviour
         moveCamera.SetMoveInput(value.Get<Vector2>());
     }
 
+    [UsedImplicitly]
+    private void OnRotateCamera(InputValue value)
+    {
+        if (Mouse.current.middleButton.isPressed)
+        {
+            moveCamera.SetRotateInput(value.Get<Vector2>());
+        }
+    }
+
     private RaycastHit RayToMouse()
     {
         Vector3 mousePos = Mouse.current.position.ReadValue();
