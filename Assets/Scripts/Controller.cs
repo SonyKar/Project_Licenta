@@ -6,7 +6,8 @@ using UnityEngine.InputSystem;
 public class Controller : MonoBehaviour
 {
     [SerializeField] private Gameplay gameplay;
-
+    [SerializeField] private CameraControl moveCamera;
+    
     [UsedImplicitly]
     private void OnPerformAction()
     {
@@ -39,6 +40,12 @@ public class Controller : MonoBehaviour
             gameplay.SetSelectedObject(clickedObject);
             clickedObjectSelectable.OnSelect();
         }
+    }
+
+    [UsedImplicitly]
+    private void OnMoveCamera(InputValue value)
+    {
+        moveCamera.SetMoveInput(value.Get<Vector2>());
     }
 
     private RaycastHit RayToMouse()
