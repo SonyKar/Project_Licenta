@@ -12,14 +12,17 @@ public class Controller : MonoBehaviour
     private void OnPerformAction()
     {
         RaycastHit hit = RayToMouse();
-        GameObject clickedObject = hit.transform.gameObject;
-        
-        if (clickedObject.CompareTag("Ground") && gameplay.selectedObject)
+        if (hit.transform != null)
         {
-            NavMeshAgent navMeshAgent = gameplay.selectedObject.GetComponent<NavMeshAgent>();
-            if (navMeshAgent != null)
+            GameObject clickedObject = hit.transform.gameObject;
+        
+            if (clickedObject.CompareTag("Ground") && gameplay.selectedObject)
             {
-                navMeshAgent.destination = hit.point;
+                NavMeshAgent navMeshAgent = gameplay.selectedObject.GetComponent<NavMeshAgent>();
+                if (navMeshAgent != null)
+                {
+                    navMeshAgent.destination = hit.point;
+                }
             }
         }
     }
@@ -28,17 +31,20 @@ public class Controller : MonoBehaviour
     private void OnSelectActor()
     {
         RaycastHit hit = RayToMouse();
-        GameObject clickedObject = hit.transform.gameObject;
-        Selectable clickedObjectSelectable = clickedObject.GetComponent<Selectable>();
-        
-        if (clickedObjectSelectable != null)
+        if (hit.transform != null)
         {
-            if (gameplay.selectedObject != null)
+            GameObject clickedObject = hit.transform.gameObject;
+            Selectable clickedObjectSelectable = clickedObject.GetComponent<Selectable>();
+
+            if (clickedObjectSelectable != null)
             {
-                gameplay.selectedObject.GetComponent<Selectable>().OnDeselect();
+                if (gameplay.selectedObject != null)
+                {
+                    gameplay.selectedObject.GetComponent<Selectable>().OnDeselect();
+                }
+                gameplay.SetSelectedObject(clickedObject);
+                clickedObjectSelectable.OnSelect();
             }
-            gameplay.SetSelectedObject(clickedObject);
-            clickedObjectSelectable.OnSelect();
         }
     }
 
@@ -55,6 +61,16 @@ public class Controller : MonoBehaviour
         {
             moveCamera.SetRotateInput(value.Get<Vector2>());
         }
+        else
+        {
+            moveCamera.SetRotateInput(new Vector2(0, 0));
+        }
+    }
+
+    [UsedImplicitly]
+    private void OnZoomCamera(InputValue value)
+    {
+        moveCamera.SetZoomInput(value.Get<Vector2>());
     }
 
     private RaycastHit RayToMouse()

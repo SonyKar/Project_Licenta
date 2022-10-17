@@ -24,6 +24,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "Zoom Camera",
+                    "type": "Value",
+                    "id": "42c6f488-f0af-4bbc-8fde-9979ff798ab3",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "Perform Action",
                     "type": "Button",
                     "id": "3d07d855-b12c-453e-a0ed-0fa3b46bea1c",
@@ -249,6 +258,17 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Rotate Camera",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "150782a0-4e37-48af-9d4a-aca500ff2321",
+                    "path": "<Mouse>/scroll",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Zoom Camera",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
