@@ -1,14 +1,23 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CameraControl : MonoBehaviour
 {
+    [SerializeField] private GameObject viewCenter;
+    
     [Header("Move")]
     [SerializeField] private float moveSpeed = 40f;
+    [SerializeField] private float edgeTolerance = 0.01f;
+    [SerializeField] private bool edgeMoveEnable = true;
+    
     [Header("Rotate")]
     [SerializeField] private float rotateSpeed = 30f;
-    [Header("Zoom")]
-    [SerializeField] private float zoomSpeed = 20f;
+    [SerializeField] private float rotateRadius = 15f;
+
+    [Header("Zoom")] 
+    [SerializeField] private float zoomStepSize = 1f;
+    [SerializeField] private float zoomSpeed = 100f;
     [SerializeField] private float maxZoom = 30f;
     [SerializeField] private float minZoom = 8f;
     
@@ -24,38 +33,65 @@ public class CameraControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        MoveCamera();
-        RotateCamera();
-        ZoomCamera();
+        MoveViewCenter();
+        CheckMouseAtScreenEdge();
+        RotateViewCenter();
+        ActualiseCameraPosition();
     }
 
-    private void MoveCamera()
+    private void MoveViewCenter()
     {
-        Transform cameraTransform = transform;
-        Vector3 moveValue = _moveInput.x * cameraTransform.right + _moveInput.z * cameraTransform.forward;
+        Transform viewCenterTransform = viewCenter.transform;
+        Vector3 moveValue = _moveInput.x * viewCenterTransform.right + _moveInput.z * viewCenterTransform.forward;
         moveValue.y = 0;
-        transform.Translate(moveValue * (Time.deltaTime * moveSpeed), Space.World);
+        viewCenter.transform.position += moveValue * (Time.deltaTime * moveSpeed);
     }
 
-    private void RotateCamera()
+    private void CheckMouseAtScreenEdge()
     {
-        var cameraTransform = transform;
-        var position = cameraTransform.position;
-        var rotation = cameraTransform.rotation;
+        if (edgeMoveEnable)
+        {
+            //mouse position is in pixels
+            Vector2 mousePosition = Mouse.current.position.ReadValue();
+            Vector3 moveDirection = Vector3.zero;
 
-        transform.rotation = Quaternion.Euler(rotation.eulerAngles.x, rotation.eulerAngles.y + _rotateInput * rotateSpeed * Time.deltaTime, rotation.eulerAngles.z);
+            //horizontal scrolling
+            if (mousePosition.x < edgeTolerance * Screen.width)
+                moveDirection += -Vector3.right;
+            else if (mousePosition.x > (1f - edgeTolerance) * Screen.width)
+                moveDirection += Vector3.right;
 
-        Vector3 newCameraPosition = new Vector3(position.x + -_rotateInput * Time.deltaTime * rotateSpeed, position.y, position.z);
-        transform.position = Vector3.Lerp(position, newCameraPosition, Time.deltaTime);
+            //vertical scrolling
+            if (mousePosition.y < edgeTolerance * Screen.height)
+                moveDirection += -Vector3.forward;
+            else if (mousePosition.y > (1f - edgeTolerance) * Screen.height)
+                moveDirection += Vector3.forward;
+
+            viewCenter.transform.position += moveDirection * (Time.deltaTime * moveSpeed);
+        }
     }
 
-    private void ZoomCamera()
+    private void RotateViewCenter()
     {
-        var localPosition = transform.localPosition;
-        Vector3 zoomTarget = new Vector3(localPosition.x, _zoomHeight, localPosition.z);
+        var rotation = viewCenter.transform.rotation;
+        float newAngle = rotation.eulerAngles.y + _rotateInput * rotateSpeed * Time.deltaTime;
+        
+        viewCenter.transform.rotation = Quaternion.Euler(rotation.eulerAngles.x, newAngle, rotation.eulerAngles.z);
+    }
 
-        localPosition = Vector3.Lerp(localPosition, zoomTarget, Time.deltaTime * zoomSpeed);
-        transform.localPosition = localPosition;
+    private void ActualiseCameraPosition()
+    {
+        var position = transform.position;
+        float newAngle = viewCenter.transform.eulerAngles.y;
+
+        Vector3 newCameraPosition = new Vector3(-rotateRadius * (float)Math.Sin(Mathf.Deg2Rad * newAngle),
+                                        _zoomHeight,
+                                        -rotateRadius * (float)Math.Cos(Mathf.Deg2Rad * newAngle))
+                                    + viewCenter.transform.position;
+
+        position = new Vector3(newCameraPosition.x, position.y, newCameraPosition.z);
+        transform.position = Vector3.Lerp(position, newCameraPosition, Time.deltaTime * zoomSpeed);
+        transform.LookAt(viewCenter.transform);
     }
 
     public void SetMoveInput(Vector2 moveInput)
@@ -75,10 +111,9 @@ public class CameraControl : MonoBehaviour
         // If value != 0
         if (Math.Abs(value) > 0.1f)
         {
-            float localZoomHeight = transform.localPosition.y + value;
-            if (localZoomHeight < minZoom) localZoomHeight = minZoom;
-            else if (localZoomHeight > maxZoom) localZoomHeight = maxZoom;
-            _zoomHeight = localZoomHeight;
+            _zoomHeight = transform.localPosition.y + value * zoomStepSize;
+            if (_zoomHeight < minZoom) _zoomHeight = minZoom;
+            else if (_zoomHeight > maxZoom) _zoomHeight = maxZoom;
         }
     }
 }
