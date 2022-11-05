@@ -1,7 +1,9 @@
+using Behaviours;
 using JetBrains.Annotations;
+using Targets;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.InputSystem;
+using Behaviour = Behaviours.Behaviour;
 
 public class Controller : MonoBehaviour
 {
@@ -18,10 +20,26 @@ public class Controller : MonoBehaviour
         
             if (clickedObject.CompareTag("Ground") && gameplay.selectedObject)
             {
-                NavMeshAgent navMeshAgent = gameplay.selectedObject.GetComponent<NavMeshAgent>();
-                if (navMeshAgent != null)
+                Walker walker = gameplay.selectedObject.GetComponent<Walker>();
+                if (walker != null)
                 {
-                    navMeshAgent.destination = hit.point;
+                    walker.DoForGround(hit.point);
+                }
+            }
+            else if (gameplay.selectedObject)
+            {
+                BehaviourChooser behaviourChooser = gameplay.selectedObject.GetComponent<BehaviourChooser>();
+                if (behaviourChooser != null)
+                {
+                    Target target = clickedObject.GetComponent<Target>();
+                    if (target != null)
+                    {
+                        Behaviour behaviour = target.BestBehaviour(behaviourChooser);
+                        if (behaviour != null)
+                        {
+                            target.Behave(behaviour);
+                        }
+                    }
                 }
             }
         }
@@ -57,14 +75,10 @@ public class Controller : MonoBehaviour
     [UsedImplicitly]
     private void OnRotateCamera(InputValue value)
     {
-        if (Mouse.current.middleButton.isPressed)
-        {
-            moveCamera.SetRotateInput(value.Get<Vector2>());
-        }
-        else
-        {
-            moveCamera.SetRotateInput(new Vector2(0, 0));
-        }
+        moveCamera.SetRotateInput(Mouse.current.middleButton.isPressed ? 
+            value.Get<Vector2>() : 
+            new Vector2(0, 0)
+        );
     }
 
     [UsedImplicitly]

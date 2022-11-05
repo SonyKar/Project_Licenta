@@ -11,6 +11,10 @@ GameObject:
   - component: {fileID: 2177847134401752383}
   - component: {fileID: 2177847134401752382}
   - component: {fileID: 2177847134401752381}
+  - component: {fileID: 7065319904062825854}
+  - component: {fileID: 3404488879733464291}
+  - component: {fileID: 2161002982612855758}
+  - component: {fileID: 8424802251153474633}
   - component: {fileID: 2177847134401752368}
   - component: {fileID: 2177847134401752369}
   - component: {fileID: 2177847134401752370}
@@ -87,6 +91,58 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7065319904062825854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2177847134401752379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c91e54fe5060064498a00f216a8921b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3404488879733464291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2177847134401752379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b381c3167f30338498c51860eda8eade, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  doerObject: {fileID: 8424802251153474633}
+  navMeshAgent: {fileID: 2177847134401752369}
+--- !u!114 &2161002982612855758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2177847134401752379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cc595768bd37f44c830f3f97d2b8e58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  doerObject: {fileID: 8424802251153474633}
+  navMeshAgent: {fileID: 2177847134401752369}
+--- !u!114 &8424802251153474633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2177847134401752379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1e089829d10353409abe1864aba79af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2177847134401752368
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,8 +275,8 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 1
+        time: 0.0074738422
+        value: 0.5263163
         inSlope: 0
         outSlope: 0
         tangentMode: 0
