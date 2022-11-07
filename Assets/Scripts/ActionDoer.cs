@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Action = Actions.Action;
@@ -15,6 +16,7 @@ public class ActionDoer : MonoBehaviour
     public void NextAction()
     {
         _currentAction = (_currentAction + 1) % _actions.Count;
+        StopAllCoroutines();
     }
 
     public void AddAction(Action action)
@@ -26,5 +28,11 @@ public class ActionDoer : MonoBehaviour
     {
         _actions.Clear();
         _currentAction = 0;
+        StopAllCoroutines();
+    }
+
+    public void StartNewCoroutine(IEnumerator enumerator)
+    {
+        StartCoroutine(enumerator);
     }
 }

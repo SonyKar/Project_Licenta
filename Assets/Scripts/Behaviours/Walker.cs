@@ -1,17 +1,17 @@
 using Actions;
+using Targets;
 using UnityEngine;
 using UnityEngine.AI;
-using Tree = Targets.Target;
 
 namespace Behaviours
 {
     public class Walker : Behaviour
     {
         [SerializeField] private NavMeshAgent navMeshAgent;
-        public override void DoForTree(Tree tree)
+        public override void DoForTree(ITarget tree)
         {
             doerObject.ClearActionQueue();
-            MoveTo moveToMe = new MoveTo(doerObject, navMeshAgent, tree.transform.position, 5);
+            MoveTo moveToMe = new MoveTo(doerObject, navMeshAgent, ((MonoBehaviour)tree).transform.position, 3);
             doerObject.AddAction(moveToMe);
         }
 

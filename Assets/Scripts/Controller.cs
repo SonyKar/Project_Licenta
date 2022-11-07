@@ -31,7 +31,7 @@ public class Controller : MonoBehaviour
                 BehaviourChooser behaviourChooser = gameplay.selectedObject.GetComponent<BehaviourChooser>();
                 if (behaviourChooser != null)
                 {
-                    Target target = clickedObject.GetComponent<Target>();
+                    ITarget target = clickedObject.GetComponent<ITarget>();
                     if (target != null)
                     {
                         Behaviour behaviour = target.BestBehaviour(behaviourChooser);

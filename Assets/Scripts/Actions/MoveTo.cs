@@ -22,17 +22,17 @@ namespace Actions
         
         public override void Do()
         {
+            if (_wasStarted && _navMeshAgent.remainingDistance < _navMeshAgent.stoppingDistance + 0.1f)
+            {
+                _activeObject.NextAction();
+                _wasStarted = false;
+            }
+            
             if (!_wasStarted)
             {
                 _navMeshAgent.stoppingDistance = _stoppingDistance;
                 _navMeshAgent.destination = _destination;
                 _wasStarted = true;
-            }
-            
-            if (_navMeshAgent.remainingDistance < 0.1f)
-            {
-                _activeObject.NextAction();
-                _wasStarted = false;
             }
         }
     }

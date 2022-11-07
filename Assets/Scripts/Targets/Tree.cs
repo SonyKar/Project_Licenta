@@ -3,7 +3,7 @@ using Behaviour = Behaviours.Behaviour;
 
 namespace Targets
 {
-    public class Tree : Target
+    public class Tree : Mineable
     {
         public override Behaviour BestBehaviour(BehaviourChooser behaviourChooser)
         {
