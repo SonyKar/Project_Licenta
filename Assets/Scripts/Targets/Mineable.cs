@@ -7,7 +7,7 @@ namespace Targets
     public abstract class Mineable : MonoBehaviour, ITarget
     {
         [SerializeField] private int health = 1;
-        [SerializeField] private ResourceType resourceType;
+        [SerializeField] public ResourceType resourceType;
 
         public abstract Behaviour BestBehaviour(BehaviourChooser behaviourChooser);
         public abstract void Behave(Behaviour behaviour);

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2177847134401752382}
   - component: {fileID: 2177847134401752381}
   - component: {fileID: 7065319904062825854}
+  - component: {fileID: 3679125645607039392}
   - component: {fileID: 3404488879733464291}
   - component: {fileID: 2161002982612855758}
   - component: {fileID: 8424802251153474633}
@@ -103,6 +104,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c91e54fe5060064498a00f216a8921b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3679125645607039392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2177847134401752379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60721385c4c95cd4196292504a9ef269, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resourcesInHands: 0
+  resourceTypeInHands: 0
+  maxWood: 10
+  maxStone: 10
 --- !u!114 &3404488879733464291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,6 +135,7 @@ MonoBehaviour:
   doerObject: {fileID: 8424802251153474633}
   resourcesFromHit: 1
   secondsBetweenHits: 1.5
+  inventory: {fileID: 3679125645607039392}
 --- !u!114 &2161002982612855758
 MonoBehaviour:
   m_ObjectHideFlags: 0

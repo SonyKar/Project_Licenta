@@ -1,4 +1,5 @@
 using Actions;
+using ControllableUnit;
 using Targets;
 using UnityEngine;
 
@@ -8,6 +9,8 @@ namespace Behaviours
     {
         [SerializeField] private int resourcesFromHit = 50;
         [SerializeField] private float secondsBetweenHits = 1.5f;
+
+        [SerializeField] private Inventory inventory;
         
         private Walker _walker;
 
@@ -23,7 +26,7 @@ namespace Behaviours
                 _walker.DoForTree(tree);
             }
 
-            Mine mine = new Mine(doerObject, (Mineable)tree, resourcesFromHit, secondsBetweenHits);
+            Mine mine = new Mine(doerObject, inventory, (Mineable)tree, resourcesFromHit, secondsBetweenHits);
             doerObject.AddAction(mine);
         }
     }
