@@ -7,27 +7,40 @@ namespace Behaviours
 {
     public class Miner : Behaviour
     {
+        [Header("Miner Properties")]
         [SerializeField] private int resourcesFromHit = 50;
         [SerializeField] private float secondsBetweenHits = 1.5f;
 
+        [Header("Additional Behaviours")]
         [SerializeField] private Inventory inventory;
-        
-        private Walker _walker;
+        [SerializeField] private Carrier carrier;
+        [SerializeField] private Walker walker;
 
-        private void Awake()
+        private void Update()
         {
-            _walker = GetComponent<Walker>();
+            // if (_target.IsDepleted())
+            // {
+            //     _target
+            //     _target.Behave(this);
+            // }
         }
 
-        public override void DoForTree(ITarget tree)
+        public override void DoForTree(Target tree, bool doCleanActionQueue = true)
         {
-            if (_walker != null)
+            if (doCleanActionQueue) activeObject.ClearActionQueue();
+            if (walker != null)
             {
-                _walker.DoForTree(tree);
+                walker.MoveToObject(tree);
             }
 
-            Mine mine = new Mine(doerObject, inventory, (Mineable)tree, resourcesFromHit, secondsBetweenHits);
-            doerObject.AddAction(mine);
+            Mine mine = new Mine(activeObject, inventory, (Mineable)tree, resourcesFromHit, secondsBetweenHits);
+            activeObject.AddAction(mine);
+            
+            Sawmill sawmill = Gameplay.GameplayObject.GetClosestSawmill(transform.position);
+            if (carrier != null)
+            {
+                carrier.DoForSawmill(sawmill, false);
+            }
         }
     }
 }

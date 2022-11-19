@@ -6,7 +6,6 @@ namespace Actions
 {
     public class MoveTo : Action
     {
-        private readonly ActionDoer _activeObject;
         private readonly NavMeshAgent _navMeshAgent;
         
         private readonly Vector3 _destination;
@@ -14,8 +13,8 @@ namespace Actions
         private readonly int _stoppingDistance;
 
         public MoveTo(ActionDoer activeObject, NavMeshAgent navMeshAgent, Vector3 destination, int stoppingDistance = 0)
+        : base(activeObject)
         {
-            _activeObject = activeObject;
             _navMeshAgent = navMeshAgent;
             _destination = destination;
             _stoppingDistance = stoppingDistance;
@@ -25,7 +24,7 @@ namespace Actions
         {
             if (_wasStarted && _navMeshAgent.remainingDistance < _navMeshAgent.stoppingDistance + 0.1f)
             {
-                _activeObject.NextAction();
+                ActiveObject.NextAction();
                 _wasStarted = false;
             }
             

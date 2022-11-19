@@ -1,18 +1,20 @@
 ﻿using Behaviours;
+using Model;
 using UnityEngine;
 using Behaviour = Behaviours.Behaviour;
 
 namespace Targets
 {
-    public abstract class Mineable : MonoBehaviour, ITarget
+    public abstract class Mineable : Target
     {
+        [SerializeField] private bool isDepleted;
         [SerializeField] private int health = 1;
-        [SerializeField] public ResourceType resourceType;
+        [SerializeField] private ResourceType resourceType;
 
-        public abstract Behaviour BestBehaviour(BehaviourChooser behaviourChooser);
-        public abstract void Behave(Behaviour behaviour);
+        public abstract override Behaviour BestBehaviour(BehaviourChooser behaviourChooser);
+        public abstract override void Behave(Behaviour behaviour);
 
-        public int TakeHit(int damage)
+        public ResourceBundle TakeHit(int damage)
         {
             int initialHealth = health;
             health -= damage;
@@ -20,10 +22,20 @@ namespace Targets
             if (health <= 0)
             {
                 health = 0;
-                Destroy(gameObject);
+                isDepleted = true;
             }
 
-            return initialHealth - health;
+            return new ResourceBundle(initialHealth - health, resourceType);
+        }
+
+        public ResourceType GetResourceType()
+        {
+            return resourceType;
+        }
+
+        public bool IsDepleted()
+        {
+            return isDepleted;
         }
     }
 }

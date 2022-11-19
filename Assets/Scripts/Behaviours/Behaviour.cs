@@ -6,8 +6,13 @@ namespace Behaviours
 {
     public abstract class Behaviour : MonoBehaviour // Visitor
     {
-        [SerializeField] protected ActionDoer doerObject;
-        public virtual void DoForTree(ITarget tree)
+        [SerializeField] protected ActionDoer activeObject;
+        public virtual void DoForTree(Target tree, bool doCleanActionQueue = true)
+        {
+            
+        }
+
+        public virtual void DoForSawmill(Target sawmill, bool doCleanActionQueue = true)
         {
             
         }

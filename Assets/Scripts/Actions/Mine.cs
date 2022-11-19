@@ -1,5 +1,6 @@
 using System.Collections;
 using ControllableUnit;
+using Model;
 using Targets;
 using UnityEngine;
 
@@ -7,7 +8,6 @@ namespace Actions
 {
     public class Mine : Action
     {
-        private readonly ActionDoer _activeObject;
         private readonly Mineable _mineable;
         private readonly Inventory _inventory;
         private readonly int _damage;
@@ -15,8 +15,8 @@ namespace Actions
         private bool _isMining;
 
         public Mine(ActionDoer actionDoer, Inventory inventory, Mineable mineable, int damage, float secondsBetweenHits)
+        : base(actionDoer)
         {
-            _activeObject = actionDoer;
             _mineable = mineable;
             _damage = damage;
             _secondsBetweenHits = secondsBetweenHits;
@@ -27,7 +27,7 @@ namespace Actions
         {
             if (!_isMining)
             {
-                _activeObject.StartNewCoroutine(MineResource());
+                ActiveObject.StartNewCoroutine(MineResource());
             }
         }
         
@@ -37,26 +37,27 @@ namespace Actions
             {
                 _isMining = true;
                 yield return new WaitForSeconds(_secondsBetweenHits);
-                if (_mineable == null)
+                if (_mineable.IsDepleted())
                 {
-                    Debug.Log("No more tree");
-                    _activeObject.ClearActionQueue();
+                    Debug.Log("The tree is depleted");
+                    // TODO find another tree
                     break;
                 }
-                if (_inventory.CanGrabInHands(_mineable.resourceType) &&
-                    _inventory.CanGrabMoreInHands(_mineable.resourceType))
+
+                int resourcesToGet = _inventory.ResourcesUntilMax(_mineable.GetResourceType());
+                if (resourcesToGet >= _damage) resourcesToGet = _damage;
+                
+                ResourceBundle collectedResources = _mineable.TakeHit(resourcesToGet);
+                if (!_inventory.AddResources(collectedResources))
                 {
-                    int collectedResources = _mineable.TakeHit(_damage);
-                    _inventory.AddResources(collectedResources, _mineable.resourceType);
-                }
-                else
-                {
-                    Debug.Log("Finished");
-                    _activeObject.ClearActionQueue();
+                    Debug.Log("Finished!");
+                    break;
                 }
             }
 
-            _activeObject.NextAction();
+            _isMining = false;
+            if (_mineable.IsDepleted()) ActiveObject.ClearActionQueue();
+            else ActiveObject.NextAction();
             yield return new WaitForSeconds(0f);
         }
     }

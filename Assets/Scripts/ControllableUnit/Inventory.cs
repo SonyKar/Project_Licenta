@@ -1,3 +1,4 @@
+using Model;
 using UnityEngine;
 
 namespace ControllableUnit
@@ -12,7 +13,17 @@ namespace ControllableUnit
         [SerializeField] private int maxWood = 10;
         [SerializeField] private int maxStone = 10;
 
-        public bool CanGrabMoreInHands(ResourceType resourceType)
+        public int ResourcesUntilMax(ResourceType resourceType)
+        {
+            return resourceType switch
+            {
+                ResourceType.Wood => maxWood - resourcesInHands,
+                ResourceType.Stone => maxStone - resourcesInHands,
+                _ => 0
+            };
+        }
+        
+        private bool IsMoreSpaceFor(ResourceType resourceType)
         {
             return resourceType switch
             {
@@ -22,20 +33,32 @@ namespace ControllableUnit
             };
         }
         
-        public bool CanGrabInHands(ResourceType resourceType)
+        private bool CanGrabInHands(ResourceType resourceType)
         {
             if (resourcesInHands != 0 && resourceTypeInHands != resourceType) return false;
-            return true;
+            return IsMoreSpaceFor(resourceType);
         }
         
-        public void AddResources(int resourceNumber, ResourceType resourceType)
+        public bool AddResources(ResourceBundle resource)
         {
-            if (CanGrabInHands(resourceType) && 
-                CanGrabMoreInHands(resourceType))
+            if (CanGrabInHands(resource.ResourceType))
             {
-                resourcesInHands += resourceNumber;
-                resourceTypeInHands = resourceType;
+                resourcesInHands += resource.ResourceNumber;
+                resourceTypeInHands = resource.ResourceType;
+                return true;
             }
+
+            return false;
+        }
+
+        public void ClearInventory()
+        {
+            resourcesInHands = 0;
+        }
+
+        public ResourceType GetCurrentResourceType()
+        {
+            return resourceTypeInHands;
         }
     }
 }

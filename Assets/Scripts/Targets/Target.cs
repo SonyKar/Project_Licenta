@@ -1,11 +1,12 @@
 using Behaviours;
+using UnityEngine;
 using Behaviour = Behaviours.Behaviour;
 
 namespace Targets
 {
-    public interface ITarget
+    public abstract class Target : MonoBehaviour
     {
-        public Behaviour BestBehaviour(BehaviourChooser behaviourChooser);
-        public void Behave(Behaviour behaviour);
+        public abstract Behaviour BestBehaviour(BehaviourChooser behaviourChooser);
+        public abstract void Behave(Behaviour behaviour);
     }
 }
