@@ -24,8 +24,9 @@ namespace Actions
         {
             if (_wasStarted && _navMeshAgent.remainingDistance < _navMeshAgent.stoppingDistance + 0.1f)
             {
-                ActiveObject.NextAction();
                 _wasStarted = false;
+                ActiveObject.NextAction();
+                return;
             }
             
             if (!_wasStarted)
