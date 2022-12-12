@@ -57,15 +57,15 @@ public class CameraControl : MonoBehaviour
 
             //horizontal scrolling
             if (mousePosition.x < edgeTolerance * Screen.width)
-                moveDirection += -Vector3.right;
+                moveDirection += -viewCenter.transform.right;
             else if (mousePosition.x > (1f - edgeTolerance) * Screen.width)
-                moveDirection += Vector3.right;
+                moveDirection += viewCenter.transform.right;
 
             //vertical scrolling
             if (mousePosition.y < edgeTolerance * Screen.height)
-                moveDirection += -Vector3.forward;
+                moveDirection += -viewCenter.transform.forward;
             else if (mousePosition.y > (1f - edgeTolerance) * Screen.height)
-                moveDirection += Vector3.forward;
+                moveDirection += viewCenter.transform.forward;
 
             viewCenter.transform.position += moveDirection * (Time.deltaTime * moveSpeed);
         }
