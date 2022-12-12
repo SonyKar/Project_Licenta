@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1ba93a855be4ab1a1962e0a41144f9d, type: 3}
+  m_Name: Sawmill
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 989678971693477416, guid: 97020b4bb19f4904db02b57d415fc44f, type: 3}
+  constructionPrefab: {fileID: 5344427867339725695, guid: b854cb8492a3cfe4a8528d36f2cbacc0, type: 3}
+  parentObject: {fileID: 0}
