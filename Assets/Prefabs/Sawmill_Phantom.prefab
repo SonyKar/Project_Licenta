@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &5158648057776911703
+--- !u!1001 &5859848224412456445
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -9,7 +9,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 989678971693477412, guid: 97020b4bb19f4904db02b57d415fc44f, type: 3}
       propertyPath: m_Name
-      value: Sawmill_Construction
+      value: Sawmill_Phantom
+      objectReference: {fileID: 0}
+    - target: {fileID: 989678971693477412, guid: 97020b4bb19f4904db02b57d415fc44f, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 989678971693477416, guid: 97020b4bb19f4904db02b57d415fc44f, type: 3}
       propertyPath: m_RootOrder
@@ -17,15 +21,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 989678971693477416, guid: 97020b4bb19f4904db02b57d415fc44f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 23.29
+      value: 19.25967
       objectReference: {fileID: 0}
     - target: {fileID: 989678971693477416, guid: 97020b4bb19f4904db02b57d415fc44f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5
+      value: 0.49999905
       objectReference: {fileID: 0}
     - target: {fileID: 989678971693477416, guid: 97020b4bb19f4904db02b57d415fc44f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 8.25
+      value: 16.57768
       objectReference: {fileID: 0}
     - target: {fileID: 989678971693477416, guid: 97020b4bb19f4904db02b57d415fc44f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -58,25 +62,25 @@ PrefabInstance:
     - target: {fileID: 989678971693477418, guid: 97020b4bb19f4904db02b57d415fc44f, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: e5fcc2a19bcb21f4899dcae4d0c0aa85, type: 2}
+      objectReference: {fileID: 2100000, guid: c8e88aa6053f7524eb25d17b059a5393, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97020b4bb19f4904db02b57d415fc44f, type: 3}
---- !u!1 &5344427867339725683 stripped
+--- !u!1 &6696385551844015065 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 989678971693477412, guid: 97020b4bb19f4904db02b57d415fc44f, type: 3}
-  m_PrefabInstance: {fileID: 5158648057776911703}
+  m_PrefabInstance: {fileID: 5859848224412456445}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4165315381876734556
+--- !u!114 &-5580120503654075264
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5344427867339725683}
+  m_GameObject: {fileID: 6696385551844015065}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42754ef8a697403681235a12e44c9d67, type: 3}
+  m_Script: {fileID: 11500000, guid: 1f6cd44b216b4574aac8c33717d07a1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  constructedPrefab: {fileID: 11400000, guid: baf9fd8e6f84797458c9e90d45923384, type: 2}
-  timeToConstruct: 2
+  okMaterial: {fileID: 2100000, guid: c8e88aa6053f7524eb25d17b059a5393, type: 2}
+  errorMaterial: {fileID: 2100000, guid: c197a2176650c5a48ab58d7f5f780417, type: 2}

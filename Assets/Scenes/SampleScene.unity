@@ -280,7 +280,7 @@ GameObject:
   - component: {fileID: 524278736}
   - component: {fileID: 524278735}
   - component: {fileID: 524278734}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Plane
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -1098,6 +1098,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeBuildingType: {fileID: 11400000, guid: baf9fd8e6f84797458c9e90d45923384, type: 2}
+  phantomPrefab: {fileID: 6696385551844015061, guid: 673184c795dca984296d058eb449ab41, type: 3}
 --- !u!1 &1315668200
 GameObject:
   m_ObjectHideFlags: 0

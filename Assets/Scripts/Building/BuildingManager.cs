@@ -5,9 +5,11 @@ namespace Building
     public class BuildingManager : MonoBehaviour
     {
         [SerializeField] private BuildingTypeSo activeBuildingType;
+        [SerializeField] private Transform phantomPrefab;
     
         private Camera _mainCamera;
         private BoxCollider _constructionPrefabCollider;
+        private Transform _phantom;
     
         private void Awake()
         {
@@ -17,6 +19,7 @@ namespace Building
 
         void Update()
         {
+            _phantom ??= Instantiate(phantomPrefab);
             if (Input.GetMouseButton(0))
             {
                 RaycastHit raycastHit = RayToMouse();
@@ -32,7 +35,7 @@ namespace Building
         {
             Vector3 mousePos = Input.mousePosition; // Mouse.current.position.ReadValue()
             Ray ray = _mainCamera!.ScreenPointToRay(mousePos);
-            Physics.Raycast(ray, out RaycastHit raycastHit);
+            Physics.Raycast(ray, out RaycastHit raycastHit, 1000f, ~LayerMask.GetMask("Ignore Raycast"));
             
             return raycastHit;
         }
@@ -40,7 +43,7 @@ namespace Building
         private bool CanSpawnBuilding(Vector3 position)
         {
             Collider[] results = new Collider[1];
-            Physics.OverlapBoxNonAlloc(position, _constructionPrefabCollider.size, results, Quaternion.identity, LayerMask.GetMask("Building"));
+            Physics.OverlapBoxNonAlloc(position, _constructionPrefabCollider.size * 2, results, Quaternion.identity, ~LayerMask.GetMask("Ground", "Ignore Raycast"));
 
             return !results[0];
         }
