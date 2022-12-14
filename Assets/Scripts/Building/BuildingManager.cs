@@ -10,7 +10,7 @@ namespace Building
         private Camera _mainCamera;
         private BoxCollider _constructionPrefabCollider;
         private Transform _phantom;
-    
+
         private void Awake()
         {
             _mainCamera = Camera.main;
@@ -19,15 +19,23 @@ namespace Building
 
         void Update()
         {
-            _phantom ??= Instantiate(phantomPrefab);
-            if (Input.GetMouseButton(0))
+            if (Gameplay.GameplayObject.GameMode == GameMode.Build)
             {
-                RaycastHit raycastHit = RayToMouse();
-                if (CanSpawnBuilding(raycastHit.point))
+                _phantom ??= Instantiate(phantomPrefab);
+                if (Input.GetMouseButton(0))
                 {
-                    if (raycastHit.transform.CompareTag("Ground"))
-                        Instantiate((Object)activeBuildingType.constructionPrefab, raycastHit.point, Quaternion.identity);
+                    RaycastHit raycastHit = RayToMouse();
+                    if (CanSpawnBuilding(raycastHit.point))
+                    {
+                        if (raycastHit.transform.CompareTag("Ground"))
+                            Instantiate((Object)activeBuildingType.constructionPrefab, raycastHit.point, Quaternion.identity);
+                    }
                 }
+            }
+            else if (_phantom is not null)
+            {
+                Destroy(_phantom.gameObject);
+                _phantom = null;
             }
         }
     

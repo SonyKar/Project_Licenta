@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Gameplay : MonoBehaviour
 {
+    [SerializeField] public GameMode GameMode { get; set; } = GameMode.Free;
+    
     public GameObject selectedObject;
     public GameObject sawmills;
 

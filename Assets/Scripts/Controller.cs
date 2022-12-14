@@ -49,21 +49,20 @@ public class Controller : MonoBehaviour
     [UsedImplicitly]
     private void OnSelectActor()
     {
-        RaycastHit hit = RayToMouse();
-        if (hit.transform != null)
+        if (Gameplay.GameplayObject.GameMode == GameMode.Free)
         {
+            RaycastHit hit = RayToMouse();
+            if (hit.transform == null) return;
             GameObject clickedObject = hit.transform.gameObject;
             Selectable clickedObjectSelectable = clickedObject.GetComponent<Selectable>();
 
-            if (clickedObjectSelectable != null)
+            if (clickedObjectSelectable == null) return;
+            if (gameplay.selectedObject != null)
             {
-                if (gameplay.selectedObject != null)
-                {
-                    gameplay.selectedObject.GetComponent<Selectable>().OnDeselect();
-                }
-                gameplay.SetSelectedObject(clickedObject);
-                clickedObjectSelectable.OnSelect();
+                gameplay.selectedObject.GetComponent<Selectable>().OnDeselect();
             }
+            gameplay.SetSelectedObject(clickedObject);
+            clickedObjectSelectable.OnSelect();
         }
     }
 
@@ -86,6 +85,14 @@ public class Controller : MonoBehaviour
     private void OnZoomCamera(InputValue value)
     {
         moveCamera.SetZoomInput(value.Get<Vector2>());
+    }
+
+    [UsedImplicitly]
+    private void OnToggleBuild()
+    {
+        Gameplay.GameplayObject.GameMode = Gameplay.GameplayObject.GameMode == GameMode.Build ?
+        GameMode.Free :
+        GameMode.Build;
     }
 
     private RaycastHit RayToMouse()
