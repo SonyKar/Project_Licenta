@@ -27,7 +27,8 @@ namespace Building
 
             if (_constructionTimer >= 1f)
             {
-                Instantiate((Object)constructedPrefab.prefab, transform.position, Quaternion.identity);
+                Transform constructionTransform = transform;
+                Instantiate((Object)constructedPrefab.prefab, constructionTransform.position, Quaternion.identity, constructionTransform.parent);
                 Destroy(gameObject);
             }
         }

@@ -6,6 +6,7 @@ namespace Building
     {
         [SerializeField] private BuildingTypeSo activeBuildingType;
         [SerializeField] private Transform phantomPrefab;
+        [SerializeField] private Transform buildingParent;
         
         private BoxCollider _constructionPrefabCollider;
         private Transform _phantom;
@@ -43,7 +44,7 @@ namespace Building
                 {
                     Vector3 point = raycastHit.point;
                     point.y = 0.5f;
-                    Instantiate((Object)activeBuildingType.constructionPrefab, point, Quaternion.identity);
+                    Instantiate((Object)activeBuildingType.constructionPrefab, point, Quaternion.identity, buildingParent);
                 }
             }
         }

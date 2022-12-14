@@ -243,7 +243,7 @@ GameObject:
   m_Component:
   - component: {fileID: 260257373}
   m_Layer: 0
-  m_Name: Sawmills
+  m_Name: Buildings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -820,7 +820,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 989678971693477416, guid: 97020b4bb19f4904db02b57d415fc44f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 14.35
+      value: 23.1
       objectReference: {fileID: 0}
     - target: {fileID: 989678971693477416, guid: 97020b4bb19f4904db02b57d415fc44f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1223,6 +1223,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activeBuildingType: {fileID: 11400000, guid: baf9fd8e6f84797458c9e90d45923384, type: 2}
   phantomPrefab: {fileID: 6696385551844015061, guid: 673184c795dca984296d058eb449ab41, type: 3}
+  buildingParent: {fileID: 260257373}
 --- !u!1 &1315668200
 GameObject:
   m_ObjectHideFlags: 0

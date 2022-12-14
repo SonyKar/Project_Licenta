@@ -7,7 +7,5 @@ namespace Building
     {
         public Transform prefab;
         public Transform constructionPrefab;
-
-        public Transform parentObject;
     }
 }
