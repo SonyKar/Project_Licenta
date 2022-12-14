@@ -1,5 +1,5 @@
 using Behaviours;
-using ControllableUnit;
+using Building;
 using JetBrains.Annotations;
 using Targets;
 using UnityEngine;
@@ -8,9 +8,8 @@ using Behaviour = Behaviours.Behaviour;
 
 public class Controller : MonoBehaviour
 {
-    [SerializeField] private Gameplay gameplay;
     [SerializeField] private CameraControl moveCamera;
-    
+
     [UsedImplicitly]
     private void OnPerformAction()
     {
@@ -19,17 +18,17 @@ public class Controller : MonoBehaviour
         {
             GameObject clickedObject = hit.transform.gameObject;
         
-            if (clickedObject.CompareTag("Ground") && gameplay.selectedObject)
+            if (clickedObject.CompareTag("Ground") && Gameplay.Instance.selectedObject)
             {
-                Walker walker = gameplay.selectedObject.GetComponent<Walker>();
+                Walker walker = Gameplay.Instance.selectedObject.GetComponent<Walker>();
                 if (walker != null)
                 {
                     walker.DoForGround(hit.point);
                 }
             }
-            else if (gameplay.selectedObject)
+            else if (Gameplay.Instance.selectedObject)
             {
-                BehaviourChooser behaviourChooser = gameplay.selectedObject.GetComponent<BehaviourChooser>();
+                BehaviourChooser behaviourChooser = Gameplay.Instance.selectedObject.GetComponent<BehaviourChooser>();
                 if (behaviourChooser != null)
                 {
                     Target target = clickedObject.GetComponent<Target>();
@@ -49,20 +48,15 @@ public class Controller : MonoBehaviour
     [UsedImplicitly]
     private void OnSelectActor()
     {
-        if (Gameplay.GameplayObject.GameMode == GameMode.Free)
+        RaycastHit hit = RayToMouse();
+        if (hit.transform == null) return;
+        if (Gameplay.Instance.GameMode == GameMode.Free)
         {
-            RaycastHit hit = RayToMouse();
-            if (hit.transform == null) return;
-            GameObject clickedObject = hit.transform.gameObject;
-            Selectable clickedObjectSelectable = clickedObject.GetComponent<Selectable>();
-
-            if (clickedObjectSelectable == null) return;
-            if (gameplay.selectedObject != null)
-            {
-                gameplay.selectedObject.GetComponent<Selectable>().OnDeselect();
-            }
-            gameplay.SetSelectedObject(clickedObject);
-            clickedObjectSelectable.OnSelect();
+            Gameplay.Instance.SelectObject(hit.transform.gameObject);
+        }
+        else if (Gameplay.Instance.GameMode == GameMode.Build)
+        {
+            BuildingManager.Instance.Build(hit);
         }
     }
 
@@ -90,16 +84,18 @@ public class Controller : MonoBehaviour
     [UsedImplicitly]
     private void OnToggleBuild()
     {
-        Gameplay.GameplayObject.GameMode = Gameplay.GameplayObject.GameMode == GameMode.Build ?
+        Gameplay.Instance.GameMode = Gameplay.Instance.GameMode == GameMode.Build ?
         GameMode.Free :
         GameMode.Build;
+        
+        BuildingManager.Instance.ToggleBuildMode();
     }
 
     private RaycastHit RayToMouse()
     {
         Vector3 mousePos = Mouse.current.position.ReadValue();
         Ray ray = Camera.main!.ScreenPointToRay(mousePos);
-        Physics.Raycast(ray, out RaycastHit raycastHit);
+        Physics.Raycast(ray, out RaycastHit raycastHit, 1000f, ~LayerMask.GetMask("Ignore Raycast"));
             
         return raycastHit;
     }

@@ -1,15 +1,15 @@
+using ControllableUnit;
 using Targets;
 using UnityEngine;
 
 public class Gameplay : MonoBehaviour
 {
-    [SerializeField] public GameMode GameMode { get; set; } = GameMode.Free;
-    
+    public GameMode GameMode { get; set; } = GameMode.Free;
     public GameObject selectedObject;
     public GameObject sawmills;
 
     private static Gameplay _instance;
-    public static Gameplay GameplayObject => _instance;
+    public static Gameplay Instance => _instance;
     void Awake()
     {
         if(_instance == null)
@@ -37,8 +37,16 @@ public class Gameplay : MonoBehaviour
         return nearestSawmill;
     }
     
-    public void SetSelectedObject(GameObject clickedObject)
+    public void SelectObject(GameObject clickedObject)
     {
+        Selectable clickedObjectSelectable = clickedObject.GetComponent<Selectable>();
+
+        if (clickedObjectSelectable == null) return;
+        if (selectedObject != null)
+        {
+            selectedObject.GetComponent<Selectable>().OnDeselect();
+        }
         selectedObject = clickedObject;
+        clickedObjectSelectable.OnSelect();
     }
 }

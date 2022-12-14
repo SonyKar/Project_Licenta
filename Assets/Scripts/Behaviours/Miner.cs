@@ -36,7 +36,7 @@ namespace Behaviours
             Mine mine = new Mine(activeObject, inventory, (Mineable)tree, resourcesFromHit, secondsBetweenHits);
             activeObject.AddAction(mine);
             
-            Sawmill sawmill = Gameplay.GameplayObject.GetClosestSawmill(tree.transform.position);
+            Sawmill sawmill = Gameplay.Instance.GetClosestSawmill(tree.transform.position);
             if (carrier != null)
             {
                 carrier.DoForSawmill(sawmill, false);
