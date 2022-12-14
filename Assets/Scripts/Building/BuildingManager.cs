@@ -40,7 +40,11 @@ namespace Building
             if (CanSpawnBuilding(raycastHit.point))
             {
                 if (raycastHit.transform.CompareTag("Ground"))
-                    Instantiate((Object)activeBuildingType.constructionPrefab, raycastHit.point, Quaternion.identity);
+                {
+                    Vector3 point = raycastHit.point;
+                    point.y = 0.5f;
+                    Instantiate((Object)activeBuildingType.constructionPrefab, point, Quaternion.identity);
+                }
             }
         }
         
