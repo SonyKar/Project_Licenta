@@ -10,13 +10,12 @@ namespace Building
         
         private BoxCollider _constructionPrefabCollider;
         private Transform _phantom;
-        
-        private static BuildingManager _instance;
-        public static BuildingManager Instance => _instance;
+
+        public static BuildingManager Instance { get; private set; }
         void Awake()
         {
-            if (_instance == null)
-                _instance = this;
+            if (Instance == null)
+                Instance = this;
             else
                 Destroy(this);
             

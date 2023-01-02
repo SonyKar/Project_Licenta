@@ -39,7 +39,6 @@ namespace Actions
                 yield return new WaitForSeconds(_secondsBetweenHits);
                 if (_mineable.IsDepleted())
                 {
-                    Debug.Log("The tree is depleted");
                     // TODO find another tree
                     break;
                 }
@@ -50,7 +49,6 @@ namespace Actions
                 ResourceBundle collectedResources = _mineable.TakeHit(resourcesToGet);
                 if (!_inventory.AddResources(collectedResources))
                 {
-                    Debug.Log("Finished!");
                     break;
                 }
             }

@@ -8,12 +8,11 @@ public class Gameplay : MonoBehaviour
     public GameObject selectedObject;
     public GameObject sawmills;
 
-    private static Gameplay _instance;
-    public static Gameplay Instance => _instance;
+    public static Gameplay Instance { get; private set; }
     void Awake()
     {
-        if(_instance == null)
-            _instance = this;
+        if(Instance is null)
+            Instance = this;
         else
             Destroy(this);
     }
@@ -41,7 +40,7 @@ public class Gameplay : MonoBehaviour
     {
         Selectable clickedObjectSelectable = clickedObject.GetComponent<Selectable>();
 
-        if (clickedObjectSelectable == null) return;
+        if (clickedObjectSelectable is null) return;
         if (selectedObject != null)
         {
             selectedObject.GetComponent<Selectable>().OnDeselect();

@@ -8,18 +8,6 @@ namespace Building
         [SerializeField] private float timeToConstruct = 2f;
 
         private float _constructionTimer;
-        private Material _material;
-
-        private void Awake()
-        {
-            _material = GetComponent<MeshRenderer>().material;
-        }
-
-        private void Start()
-        {
-            // Instantiate(particles)
-            // _material.SetFloat("_Progress", 0f);
-        }
 
         private void Update()
         {

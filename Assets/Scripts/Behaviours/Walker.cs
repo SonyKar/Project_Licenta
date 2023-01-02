@@ -1,17 +1,15 @@
 using Actions;
 using Targets;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace Behaviours
 {
     public class Walker : Behaviour
     {
-        [SerializeField] private NavMeshAgent navMeshAgent;
-
         public void MoveToObject(Target target)
         {
-            MoveTo moveToMe = new MoveTo(activeObject, navMeshAgent, target.transform.position, 3);
+            if (NavMeshAgent is null) return;
+            MoveTo moveToMe = new MoveTo(activeObject, NavMeshAgent, target.transform.position, 3);
             activeObject.AddAction(moveToMe);
         }
         
@@ -29,8 +27,9 @@ namespace Behaviours
 
         public void DoForGround(Vector3 destination)
         {
+            if (NavMeshAgent is null) return;
             activeObject.ClearActionQueue();
-            MoveTo moveTo = new MoveTo(activeObject, navMeshAgent, destination);
+            MoveTo moveTo = new MoveTo(activeObject, NavMeshAgent, destination);
             activeObject.AddAction(moveTo);
         }
     }

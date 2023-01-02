@@ -1,3 +1,4 @@
+using System;
 using Behaviours;
 using Building;
 using JetBrains.Annotations;
@@ -10,37 +11,41 @@ public class Controller : MonoBehaviour
 {
     [SerializeField] private CameraControl moveCamera;
 
+    private static Camera _camera;
+    
+    private void Awake()
+    {
+        _camera = Camera.main;
+    }
+
     [UsedImplicitly]
     private void OnPerformAction()
     {
         RaycastHit hit = RayToMouse();
-        if (hit.transform != null)
+        if (hit.transform is null) return;
+        GameObject clickedObject = hit.transform.gameObject;
+
+        if (!Gameplay.Instance.selectedObject) return;
+        if (clickedObject.CompareTag("Ground"))
         {
-            GameObject clickedObject = hit.transform.gameObject;
-        
-            if (clickedObject.CompareTag("Ground") && Gameplay.Instance.selectedObject)
+            Walker walker = Gameplay.Instance.selectedObject.GetComponent<Walker>();
+            if (walker != null)
             {
-                Walker walker = Gameplay.Instance.selectedObject.GetComponent<Walker>();
-                if (walker != null)
-                {
-                    walker.DoForGround(hit.point);
-                }
+                walker.DoForGround(hit.point);
             }
-            else if (Gameplay.Instance.selectedObject)
+        }
+        else
+        {
+            BehaviourChooser behaviourChooser = Gameplay.Instance.selectedObject.GetComponent<BehaviourChooser>();
+            if (behaviourChooser is null) return;
+                
+            Target target = clickedObject.GetComponent<Target>();
+            if (target is null) return;
+                
+            Behaviour behaviour = target.BestBehaviour(behaviourChooser);
+            if (behaviour is not null)
             {
-                BehaviourChooser behaviourChooser = Gameplay.Instance.selectedObject.GetComponent<BehaviourChooser>();
-                if (behaviourChooser != null)
-                {
-                    Target target = clickedObject.GetComponent<Target>();
-                    if (target != null)
-                    {
-                        Behaviour behaviour = target.BestBehaviour(behaviourChooser);
-                        if (behaviour != null)
-                        {
-                            target.Behave(behaviour);
-                        }
-                    }
-                }
+                target.Behave(behaviour);
             }
         }
     }
@@ -49,14 +54,17 @@ public class Controller : MonoBehaviour
     private void OnSelectActor()
     {
         RaycastHit hit = RayToMouse();
-        if (hit.transform == null) return;
-        if (Gameplay.Instance.GameMode == GameMode.Free)
+        if (hit.transform is null) return;
+        switch (Gameplay.Instance.GameMode)
         {
-            Gameplay.Instance.SelectObject(hit.transform.gameObject);
-        }
-        else if (Gameplay.Instance.GameMode == GameMode.Build)
-        {
-            BuildingManager.Instance.Build(hit);
+            case GameMode.Free:
+                Gameplay.Instance.SelectObject(hit.transform.gameObject);
+                break;
+            case GameMode.Build:
+                BuildingManager.Instance.Build(hit);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
         }
     }
 
@@ -91,10 +99,10 @@ public class Controller : MonoBehaviour
         BuildingManager.Instance.ToggleBuildMode();
     }
 
-    private RaycastHit RayToMouse()
+    public static RaycastHit RayToMouse()
     {
         Vector3 mousePos = Mouse.current.position.ReadValue();
-        Ray ray = Camera.main!.ScreenPointToRay(mousePos);
+        Ray ray = _camera.ScreenPointToRay(mousePos);
         Physics.Raycast(ray, out RaycastHit raycastHit, 1000f, ~LayerMask.GetMask("Ignore Raycast"));
             
         return raycastHit;
