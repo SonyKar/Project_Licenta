@@ -59,7 +59,8 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: e5fcc2a19bcb21f4899dcae4d0c0aa85, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6406139818336858852, guid: 97020b4bb19f4904db02b57d415fc44f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 97020b4bb19f4904db02b57d415fc44f, type: 3}
 --- !u!1 &5344427867339725683 stripped
 GameObject:
@@ -78,5 +79,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42754ef8a697403681235a12e44c9d67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  constructedPrefab: {fileID: 11400000, guid: baf9fd8e6f84797458c9e90d45923384, type: 2}
-  timeToConstruct: 2
+  constructionInfo: {fileID: 11400000, guid: baf9fd8e6f84797458c9e90d45923384, type: 2}
+  constructionProgress: 0

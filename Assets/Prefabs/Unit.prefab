@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7065319904062825854}
   - component: {fileID: 3679125645607039392}
   - component: {fileID: 3404488879733464291}
+  - component: {fileID: 5032585304446666598}
   - component: {fileID: 2161002982612855758}
   - component: {fileID: 8251767705416400577}
   - component: {fileID: 8424802251153474633}
@@ -133,12 +134,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b381c3167f30338498c51860eda8eade, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeObject: {fileID: 8424802251153474633}
   resourcesFromHit: 1
   secondsBetweenHits: 1.5
-  inventory: {fileID: 3679125645607039392}
-  carrier: {fileID: 8251767705416400577}
-  walker: {fileID: 2161002982612855758}
+--- !u!114 &5032585304446666598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2177847134401752379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76d6242c9ab140b8ae8b95f2f2de39e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthToAddAtHit: 10
+  timeBetweenHits: 1
 --- !u!114 &2161002982612855758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,8 +162,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cc595768bd37f44c830f3f97d2b8e58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeObject: {fileID: 8424802251153474633}
-  navMeshAgent: {fileID: 2177847134401752369}
 --- !u!114 &8251767705416400577
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,9 +174,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea47cfcf252c4e7eae4432fdcdc8b12a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeObject: {fileID: 8424802251153474633}
-  inventory: {fileID: 3679125645607039392}
-  walker: {fileID: 2161002982612855758}
 --- !u!114 &8424802251153474633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,7 +186,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1e089829d10353409abe1864aba79af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentActionIndex: 0
 --- !u!114 &2177847134401752368
 MonoBehaviour:
   m_ObjectHideFlags: 0

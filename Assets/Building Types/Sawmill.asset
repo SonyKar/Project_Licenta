@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 989678971693477416, guid: 97020b4bb19f4904db02b57d415fc44f, type: 3}
   constructionPrefab: {fileID: 5344427867339725695, guid: b854cb8492a3cfe4a8528d36f2cbacc0, type: 3}
-  parentObject: {fileID: 0}
+  constructionHealth: 50
