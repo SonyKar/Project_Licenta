@@ -10,20 +10,20 @@ namespace Behaviours
     {
         public override void DoForSawmill(Target sawmill, bool doCleanActionQueue = true)
         {
-            if (doCleanActionQueue) activeObject.ClearActionQueue();
-            if (Inventory != null)
+            if (doCleanActionQueue) ActiveObject.ClearActionQueue();
+            
+            if (Inventory == null)
             {
-                if (Inventory.GetCurrentResourceType() == ResourceType.Wood)
-                {
-                    if (Walker != null)
-                    {
-                        Walker.MoveToObject(sawmill);
-                    }
-                    
-                    StockResource stockResource = new StockResource(activeObject, Inventory);
-                    activeObject.AddAction(stockResource);
-                }
+                Debug.Log("No Inventory");
+                return;
             }
+            if (Inventory.GetCurrentResourceType() != ResourceType.Wood) return;
+            
+            if (Walker == null) Debug.Log("No Walker Behaviour");
+            Walker.MoveToObject(sawmill);
+
+            StockResource stockResource = new StockResource(ActiveObject, Inventory);
+            ActiveObject.AddAction(stockResource);
         }
     }
 }

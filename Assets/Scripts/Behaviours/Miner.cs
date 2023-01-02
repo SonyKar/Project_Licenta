@@ -14,19 +14,22 @@ namespace Behaviours
 
         public override void DoForTree(Target tree, bool doCleanActionQueue = true)
         {
-            if (doCleanActionQueue) activeObject.ClearActionQueue();
-            if (Walker != null)
+            if (doCleanActionQueue) ActiveObject.ClearActionQueue();
+            if (Walker == null) 
             {
-                Walker.MoveToObject(tree);
+                Debug.Log("No Walker Behaviour");
+                return;
             }
+            Walker.MoveToObject(tree);
 
-            Mine mine = new Mine(activeObject, Inventory, (Mineable)tree, resourcesFromHit, secondsBetweenHits);
-            activeObject.AddAction(mine);
+            Mine mine = new Mine(ActiveObject, Inventory, (Mineable)tree, resourcesFromHit, secondsBetweenHits);
+            ActiveObject.AddAction(mine);
             
             Sawmill sawmill = Gameplay.Instance.GetClosestSawmill(tree.transform.position);
-            if (Carrier != null)
+            if (Carrier == null) 
             {
                 Carrier.DoForSawmill(sawmill, false);
+                Debug.Log("No Carrier Behaviour");
             }
         }
     }

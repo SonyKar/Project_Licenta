@@ -7,5 +7,6 @@ namespace Building
     {
         public Transform prefab;
         public Transform constructionPrefab;
+        public int constructionHealth = 100;
     }
 }
