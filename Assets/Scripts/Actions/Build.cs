@@ -33,13 +33,13 @@ namespace Actions
             {
                 _isBuilding = true;
                 yield return new WaitForSeconds(_secondsBetweenHits);
-                if (_construction.IsConstructed()) break;
+                if (_construction is null || _construction.IsConstructed()) break;
 
                 _construction.BuildTick(_healthToAdd);
             }
 
             _isBuilding = false;
-            if (_construction.IsConstructed()) ActiveObject.ClearActionQueue();
+            if (_construction is null || _construction.IsConstructed()) ActiveObject.ClearActionQueue();
             else ActiveObject.NextAction();
             yield return new WaitForSeconds(0f);
         }
