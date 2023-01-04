@@ -33,10 +33,15 @@ namespace Actions
                 ActiveObject.NextAction();
                 return;
             }
-            
-            if (!_wasStarted || nearestTarget == null)
+
+            if (!_wasStarted || _destinationFinder != null && nearestTarget == null)
             {
-                if (_destinationFinder != null) nearestTarget = _destinationFinder(_navMeshAgent.gameObject.transform.position);
+                if (_destinationFinder != null)
+                {
+                    nearestTarget = _destinationFinder(_navMeshAgent.gameObject.transform.position);
+                    if (nearestTarget == null) ActiveObject.ClearActionQueue();
+                    _navMeshAgent.destination = _navMeshAgent.transform.position;
+                }
                 _navMeshAgent.stoppingDistance = _stoppingDistance;
                 _navMeshAgent.destination = _destinationFinder != null ? nearestTarget.transform.position : _destination;
                 _wasStarted = true;
