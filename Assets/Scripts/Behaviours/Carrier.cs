@@ -1,6 +1,4 @@
-﻿using System;
-using Actions;
-using ControllableUnit;
+﻿using Actions;
 using Targets;
 using UnityEngine;
 
@@ -18,8 +16,12 @@ namespace Behaviours
                 return;
             }
             if (Inventory.GetCurrentResourceType() != ResourceType.Wood) return;
-            
-            if (Walker == null) Debug.Log("No Walker Behaviour");
+
+            if (Walker == null)
+            {
+                Debug.Log("No Walker Behaviour");
+                return;
+            }
             Walker.MoveToObject(sawmill);
 
             StockResource stockResource = new StockResource(ActiveObject, Inventory);

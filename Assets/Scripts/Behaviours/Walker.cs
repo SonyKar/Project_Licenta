@@ -1,3 +1,4 @@
+using System;
 using Actions;
 using Targets;
 using UnityEngine;
@@ -14,6 +15,17 @@ namespace Behaviours
                 return;
             }
             MoveTo moveToMe = new MoveTo(ActiveObject, NavMeshAgent, target.transform.position, 3);
+            ActiveObject.AddAction(moveToMe);
+        }
+
+        public void MoveToNearest(Func<Vector3, Target> destinationFinder)
+        {
+            if (NavMeshAgent == null)
+            {
+                Debug.Log("No NavMeshAgent");
+                return;
+            }
+            MoveTo moveToMe = new MoveTo(ActiveObject, NavMeshAgent, Vector3.zero, 3, destinationFinder);
             ActiveObject.AddAction(moveToMe);
         }
         

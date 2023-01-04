@@ -1,4 +1,6 @@
+using System;
 using ControllableUnit;
+using Targets;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,15 +11,18 @@ namespace Actions
         private readonly NavMeshAgent _navMeshAgent;
         
         private readonly Vector3 _destination;
+        private readonly Func<Vector3, Target> _destinationFinder;
         private bool _wasStarted;
         private readonly int _stoppingDistance;
+        private Target nearestTarget;
 
-        public MoveTo(ActionDoer activeObject, NavMeshAgent navMeshAgent, Vector3 destination, int stoppingDistance = 0)
+        public MoveTo(ActionDoer activeObject, NavMeshAgent navMeshAgent, Vector3 destination, int stoppingDistance = 0, Func<Vector3, Target> destinationFinder = null)
         : base(activeObject)
         {
             _navMeshAgent = navMeshAgent;
-            _destination = destination;
             _stoppingDistance = stoppingDistance;
+            _destination = destination;
+            _destinationFinder = destinationFinder;
         }
         
         public override void Do()
@@ -29,10 +34,11 @@ namespace Actions
                 return;
             }
             
-            if (!_wasStarted)
+            if (!_wasStarted || nearestTarget == null)
             {
+                if (_destinationFinder != null) nearestTarget = _destinationFinder(_navMeshAgent.gameObject.transform.position);
                 _navMeshAgent.stoppingDistance = _stoppingDistance;
-                _navMeshAgent.destination = _destination;
+                _navMeshAgent.destination = _destinationFinder != null ? nearestTarget.transform.position : _destination;
                 _wasStarted = true;
             }
         }

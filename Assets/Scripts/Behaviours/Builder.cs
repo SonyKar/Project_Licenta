@@ -12,8 +12,12 @@ namespace Behaviours
         public override void DoForConstruction(Target construction, bool doCleanActionQueue = true)
         {
             if (doCleanActionQueue) ActiveObject.ClearActionQueue();
-            
-            if (Walker == null) Debug.Log("No Walker Behaviour");
+
+            if (Walker == null)
+            {
+                Debug.Log("No Walker Behaviour");
+                return;
+            }
             Walker.MoveToObject(construction);
             
             ActiveObject.AddAction(new Build(ActiveObject, secondsBetweenHits, (BuildingConstruction)construction, healthToAddAtHit));

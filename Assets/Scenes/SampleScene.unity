@@ -820,11 +820,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 989678971693477416, guid: 97020b4bb19f4904db02b57d415fc44f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 23.1
+      value: 28
       objectReference: {fileID: 0}
     - target: {fileID: 989678971693477416, guid: 97020b4bb19f4904db02b57d415fc44f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.50000095
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 989678971693477416, guid: 97020b4bb19f4904db02b57d415fc44f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1269,7 +1269,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedObject: {fileID: 0}
-  sawmills: {fileID: 260257372}
 --- !u!1 &1603876493
 GameObject:
   m_ObjectHideFlags: 0
@@ -1528,7 +1527,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 989678971693477416, guid: 97020b4bb19f4904db02b57d415fc44f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 23.29
+      value: 39.2
       objectReference: {fileID: 0}
     - target: {fileID: 989678971693477416, guid: 97020b4bb19f4904db02b57d415fc44f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1536,7 +1535,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 989678971693477416, guid: 97020b4bb19f4904db02b57d415fc44f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 8.25
+      value: 8.3
       objectReference: {fileID: 0}
     - target: {fileID: 989678971693477416, guid: 97020b4bb19f4904db02b57d415fc44f, type: 3}
       propertyPath: m_LocalRotation.w

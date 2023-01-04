@@ -1,4 +1,5 @@
 using Actions;
+using Building;
 using Targets;
 using UnityEngine;
 
@@ -28,14 +29,14 @@ namespace Behaviours
             
             Mine mine = new Mine(ActiveObject, Inventory, (Mineable)tree, resourcesFromHit, secondsBetweenHits);
             ActiveObject.AddAction(mine);
-            
-            Sawmill sawmill = Gameplay.Instance.GetClosestSawmill(tree.transform.position);
-            if (Carrier == null)
+
+            if (Carrier != null)
             {
-                Debug.Log("No Carrier Behaviour");
-                return;
+                Walker.MoveToNearest(BuildingManager.GetClosestSawmill);
+            
+                StockResource stockResource = new StockResource(ActiveObject, Inventory);
+                ActiveObject.AddAction(stockResource);   
             }
-            Carrier.DoForSawmill(sawmill, false);
         }
     }
 }
