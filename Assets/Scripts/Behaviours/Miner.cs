@@ -1,6 +1,4 @@
-using System;
 using Actions;
-using ControllableUnit;
 using Targets;
 using UnityEngine;
 
@@ -22,15 +20,22 @@ namespace Behaviours
             }
             Walker.MoveToObject(tree);
 
+            if (Inventory == null) 
+            {
+                Debug.Log("No Inventory");
+                return;
+            }
+            
             Mine mine = new Mine(ActiveObject, Inventory, (Mineable)tree, resourcesFromHit, secondsBetweenHits);
             ActiveObject.AddAction(mine);
             
             Sawmill sawmill = Gameplay.Instance.GetClosestSawmill(tree.transform.position);
-            if (Carrier == null) 
+            if (Carrier == null)
             {
-                Carrier.DoForSawmill(sawmill, false);
                 Debug.Log("No Carrier Behaviour");
+                return;
             }
+            Carrier.DoForSawmill(sawmill, false);
         }
     }
 }
