@@ -68,5 +68,10 @@ namespace ControllableUnit
         {
             return resourceTypeInHands;
         }
+
+        public int GetResourceNumberHeld()
+        {
+            return resourcesInHands;
+        }
     }
 }

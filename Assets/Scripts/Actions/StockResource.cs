@@ -14,6 +14,7 @@ namespace Actions
         
         public override void Do()
         {
+            ResourceManager.Instance.UpdateResource(_inventory.GetCurrentResourceType(), _inventory.GetResourceNumberHeld());
             _inventory.ClearInventory();
             ActiveObject.NextAction();
         }

@@ -4,6 +4,7 @@ using Building;
 using JetBrains.Annotations;
 using Targets;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using Behaviour = Behaviours.Behaviour;
 
@@ -53,6 +54,7 @@ public class Controller : MonoBehaviour
     [UsedImplicitly]
     private void OnSelectActor()
     {
+        if (EventSystem.current.IsPointerOverGameObject()) return;
         RaycastHit hit = RayToMouse();
         if (hit.transform is null) return;
         switch (Gameplay.Instance.GameMode)
@@ -90,7 +92,7 @@ public class Controller : MonoBehaviour
     }
 
     [UsedImplicitly]
-    private void OnToggleBuild()
+    public void OnToggleBuild()
     {
         Gameplay.Instance.GameMode = Gameplay.Instance.GameMode == GameMode.Build ?
         GameMode.Free :
