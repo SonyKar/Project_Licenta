@@ -1,4 +1,5 @@
 using System.Collections;
+using Behaviours;
 using ControllableUnit;
 using Model;
 using Targets;
@@ -37,11 +38,7 @@ namespace Actions
             {
                 _isMining = true;
                 yield return new WaitForSeconds(_secondsBetweenHits);
-                if (_mineable.IsDepleted())
-                {
-                    // TODO find another tree
-                    break;
-                }
+                if (_mineable.IsDepleted()) break;
 
                 int resourcesToGet = _inventory.ResourcesUntilMax(_mineable.GetResourceType());
                 if (resourcesToGet >= _damage) resourcesToGet = _damage;
@@ -54,7 +51,12 @@ namespace Actions
             }
 
             _isMining = false;
-            if (_mineable.IsDepleted()) ActiveObject.ClearActionQueue();
+            if (_mineable.IsDepleted())
+            {
+                Target tree = Locator.FindNearestTree(_mineable.transform.position);
+                if (tree is null) ActiveObject.ClearActionQueue();
+                else ActiveObject.GetComponent<Miner>().DoForTree(tree);
+            }
             else ActiveObject.NextAction();
             yield return new WaitForSeconds(0f);
         }

@@ -1,5 +1,4 @@
 using Actions;
-using Building;
 using Targets;
 using UnityEngine;
 
@@ -32,7 +31,7 @@ namespace Behaviours
 
             if (Carrier != null)
             {
-                Walker.MoveToNearest(BuildingManager.GetClosestSawmill);
+                Walker.MoveToNearest(Locator.GetClosestSawmill);
             
                 StockResource stockResource = new StockResource(ActiveObject, Inventory);
                 ActiveObject.AddAction(stockResource);   

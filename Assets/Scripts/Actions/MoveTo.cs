@@ -34,13 +34,17 @@ namespace Actions
                 return;
             }
 
-            if (!_wasStarted || _destinationFinder != null && nearestTarget == null)
+            if (!_wasStarted || _destinationFinder != null && (_navMeshAgent.destination != nearestTarget.transform.position || nearestTarget == null))
             {
                 if (_destinationFinder != null)
                 {
                     nearestTarget = _destinationFinder(_navMeshAgent.gameObject.transform.position);
-                    if (nearestTarget == null) ActiveObject.ClearActionQueue();
-                    _navMeshAgent.destination = _navMeshAgent.transform.position;
+                    if (nearestTarget is null)
+                    {
+                        _navMeshAgent.destination = _navMeshAgent.transform.position;
+                        ActiveObject.ClearActionQueue();
+                        return;
+                    }
                 }
                 _navMeshAgent.stoppingDistance = _stoppingDistance;
                 _navMeshAgent.destination = _destinationFinder != null ? nearestTarget.transform.position : _destination;

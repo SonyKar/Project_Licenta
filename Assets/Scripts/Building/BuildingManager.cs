@@ -1,5 +1,4 @@
-﻿using Targets;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Building
 {
@@ -9,8 +8,6 @@ namespace Building
         [SerializeField] private Transform phantomPrefab;
         [SerializeField] private Transform buildingParent;
 
-        private static Transform _buildings;
-        
         private BoxCollider _constructionPrefabCollider;
         private Transform _phantom;
 
@@ -23,7 +20,6 @@ namespace Building
                 Destroy(this);
             
             _constructionPrefabCollider = activeBuildingType.constructionPrefab.GetComponent<BoxCollider>();
-            _buildings = buildingParent;
         }
 
         public void ToggleBuildMode()
@@ -58,23 +54,6 @@ namespace Building
             Physics.OverlapBoxNonAlloc(position, _constructionPrefabCollider.size * 2, results, Quaternion.identity, ~LayerMask.GetMask("Ground", "Ignore Raycast"));
 
             return !results[0];
-        }
-        
-        public static Target GetClosestSawmill(Vector3 currentPosition)
-        {
-            Sawmill[] sawmillsPositions = _buildings.GetComponentsInChildren<Sawmill>();
-        
-            Sawmill nearestSawmill = null;
-            float minDist = Mathf.Infinity;
-            foreach (Sawmill s in sawmillsPositions)
-            {
-                float dist = Vector3.Distance(s.transform.position, currentPosition);
-                if (!(dist < minDist)) continue;
-                nearestSawmill = s;
-                minDist = dist;
-            }
-
-            return nearestSawmill;
         }
     }
 }

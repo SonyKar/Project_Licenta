@@ -7,7 +7,7 @@ namespace ControllableUnit
 {
     public class ActionDoer : MonoBehaviour
     {
-        private readonly List<Action> _actions = new();
+        private readonly List<Action> _actions = new List<Action>();
         private Action _currentAction;
         private int _currentActionIndex;
 

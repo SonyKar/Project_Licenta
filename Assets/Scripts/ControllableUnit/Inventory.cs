@@ -15,22 +15,30 @@ namespace ControllableUnit
 
         public int ResourcesUntilMax(ResourceType resourceType)
         {
-            return resourceType switch
+            if (resourceTypeInHands == resourceType)
             {
-                ResourceType.Wood => maxWood - resourcesInHands,
-                ResourceType.Stone => maxStone - resourcesInHands,
-                _ => 0
-            };
+                return resourceType switch
+                {
+                    ResourceType.Wood => maxWood - resourcesInHands,
+                    ResourceType.Stone => maxStone - resourcesInHands,
+                    _ => 0
+                };
+            }
+            return 0;
         }
         
         private bool IsMoreSpaceFor(ResourceType resourceType)
         {
-            return resourceType switch
+            if (resourceTypeInHands == resourceType)
             {
-                ResourceType.Wood => resourcesInHands < maxWood,
-                ResourceType.Stone => resourcesInHands < maxStone,
-                _ => false
-            };
+                return resourceType switch
+                {
+                    ResourceType.Wood => resourcesInHands < maxWood,
+                    ResourceType.Stone => resourcesInHands < maxStone,
+                    _ => false
+                };
+            }
+            return false;
         }
         
         private bool CanGrabInHands(ResourceType resourceType)
