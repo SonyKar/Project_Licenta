@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Model;
+using UnityEngine;
 
 namespace Building
 {
@@ -37,18 +40,16 @@ namespace Building
 
         public void Build(RaycastHit raycastHit)
         {
-            if (CanSpawnBuilding(raycastHit.point))
-            {
-                if (raycastHit.transform.CompareTag("Ground"))
-                {
-                    Vector3 point = raycastHit.point;
-                    point.y = 0.5f;
-                    Instantiate((Object)activeBuildingType.constructionPrefab, point, Quaternion.identity, buildingParent);
-                }
-            }
+            if (!CanSpawnBuilding(raycastHit.point)) return;
+            if (!raycastHit.transform.CompareTag("Ground")) return;
+            if (!ResourceManager.Instance.SpendResources(activeBuildingType.GetResourceRequirements())) return;
+            
+            Vector3 point = raycastHit.point;
+            point.y = 0.5f;
+            Instantiate((Object)activeBuildingType.constructionPrefab, point, Quaternion.identity, buildingParent);
         }
         
-        private bool CanSpawnBuilding(Vector3 position)
+        public bool CanSpawnBuilding(Vector3 position)
         {
             Collider[] results = new Collider[1];
             Physics.OverlapBoxNonAlloc(position, _constructionPrefabCollider.size * 2, results, Quaternion.identity, ~LayerMask.GetMask("Ground", "Ignore Raycast"));

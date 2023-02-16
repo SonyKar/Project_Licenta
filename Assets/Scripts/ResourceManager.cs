@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Model;
 using TMPro;
 using UnityEngine;
 
@@ -26,12 +30,59 @@ public class ResourceManager : MonoBehaviour
         {
             case ResourceType.Wood:
                 wood += amountToAdd;
-                woodText.text = "Wood: " + wood;
                 break;
             case ResourceType.Stone:
                 stone += amountToAdd;
-                stoneText.text = "Stone: " + stone;
                 break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(resourceType), resourceType, null);
         }
+        UpdateResourcesUI();
+    }
+
+    private bool IsEnoughResources(IEnumerable<ResourceBundle> resources)
+    {
+        foreach (ResourceBundle resource in resources)
+        {
+            switch (resource.ResourceType)
+            {
+                case ResourceType.Wood:
+                    if (wood < resource.ResourceNumber) return false;
+                    break;
+                case ResourceType.Stone:
+                    if (stone < resource.ResourceNumber) return false;
+                    break;
+                default:
+                    return false;
+            }
+        }
+        return true;
+    }
+    public bool SpendResources(IEnumerable<ResourceBundle> requiredResources)
+    {
+        requiredResources = requiredResources.ToList();
+        if (!IsEnoughResources(requiredResources)) return false;
+        foreach (ResourceBundle resource in requiredResources)
+        {
+            switch (resource.ResourceType)
+            {
+                case ResourceType.Wood:
+                    wood -= resource.ResourceNumber;
+                    break;
+                case ResourceType.Stone:
+                    stone -= resource.ResourceNumber;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+        UpdateResourcesUI();
+        return true;
+    }
+    
+    private void UpdateResourcesUI()
+    {
+        woodText.text = "Wood: " + wood;
+        stoneText.text = "Stone: " + stone;
     }
 }
