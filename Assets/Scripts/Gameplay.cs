@@ -1,10 +1,16 @@
+using System.Collections;
 using ControllableUnit;
+using TMPro;
 using UnityEngine;
 
 public class Gameplay : MonoBehaviour
 {
+    [SerializeField] private TextMeshProUGUI errorText;
+    
     public GameMode GameMode { get; set; } = GameMode.Free;
     public GameObject selectedObject;
+    
+    private Coroutine _errorMessageCoroutine;
 
     public static Gameplay Instance { get; private set; }
     void Awake()
@@ -26,5 +32,18 @@ public class Gameplay : MonoBehaviour
         }
         selectedObject = clickedObject;
         clickedObjectSelectable.OnSelect();
+    }
+
+    public void ShowError(string errorMessage)
+    {
+        if (_errorMessageCoroutine != null) StopCoroutine(_errorMessageCoroutine);
+        _errorMessageCoroutine = StartCoroutine(ShowErrorCoroutine(errorMessage));
+    }
+
+    private IEnumerator ShowErrorCoroutine(string errorMessage)
+    {
+        errorText.text = errorMessage;
+        yield return new WaitForSeconds(2);
+        errorText.text = "";
     }
 }

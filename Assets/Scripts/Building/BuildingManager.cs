@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Model;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Building
 {
@@ -40,9 +37,21 @@ namespace Building
 
         public void Build(RaycastHit raycastHit)
         {
-            if (!CanSpawnBuilding(raycastHit.point)) return;
-            if (!raycastHit.transform.CompareTag("Ground")) return;
-            if (!ResourceManager.Instance.SpendResources(activeBuildingType.GetResourceRequirements())) return;
+            if (!CanSpawnBuilding(raycastHit.point))
+            {
+                Gameplay.Instance.ShowError("Cannot build here");
+                return;
+            }
+            if (!raycastHit.transform.CompareTag("Ground"))
+            {
+                Gameplay.Instance.ShowError("Cannot build here");
+                return;
+            }
+            if (!ResourceManager.Instance.SpendResources(activeBuildingType.GetResourceRequirements()))
+            {
+                Gameplay.Instance.ShowError("You don't have enough resources");
+                return;
+            }
             
             Vector3 point = raycastHit.point;
             point.y = 0.5f;
