@@ -3,21 +3,24 @@ using Behaviours;
 using ControllableUnit;
 using Model;
 using Targets;
+using UI;
 using UnityEngine;
 
 namespace Actions
 {
     public class Mine : Action
     {
+        private readonly CircleProgress _actionProgress;
         private readonly Mineable _mineable;
         private readonly Inventory _inventory;
         private readonly int _damage;
         private readonly float _secondsBetweenHits;
         private bool _isMining;
 
-        public Mine(ActionDoer actionDoer, Inventory inventory, Mineable mineable, int damage, float secondsBetweenHits)
+        public Mine(ActionDoer actionDoer, CircleProgress actionProgress, Inventory inventory, Mineable mineable, int damage, float secondsBetweenHits)
         : base(actionDoer)
         {
+            _actionProgress = actionProgress;
             _mineable = mineable;
             _damage = damage;
             _secondsBetweenHits = secondsBetweenHits;
@@ -34,13 +37,21 @@ namespace Actions
         
         private IEnumerator MineResource()
         {
+            _actionProgress.ChangeProgress(
+                _inventory.GetResourceNumberHeld() * 1.0f / 
+                _inventory.GetMaxResourceAmount(_inventory.GetCurrentResourceType())
+            );
+            _actionProgress.Show();
+
             while (true)
             {
                 _isMining = true;
-                yield return new WaitForSeconds(_secondsBetweenHits);
-                if (_mineable.IsDepleted()) break;
-
                 int resourcesToGet = _inventory.ResourcesUntilMax(_mineable.GetResourceType());
+                if (resourcesToGet <= 0) break;
+                
+                yield return new WaitForSeconds(_secondsBetweenHits);
+                
+                if (_mineable.IsDepleted()) break;
                 if (resourcesToGet >= _damage) resourcesToGet = _damage;
                 
                 ResourceBundle collectedResources = _mineable.TakeHit(resourcesToGet);
@@ -48,8 +59,13 @@ namespace Actions
                 {
                     break;
                 }
+                _actionProgress.ChangeProgress(
+                    _inventory.GetResourceNumberHeld() * 1.0f / 
+                    _inventory.GetMaxResourceAmount(_inventory.GetCurrentResourceType())
+                );
             }
 
+            _actionProgress.Hide();
             _isMining = false;
             if (_mineable.IsDepleted())
             {

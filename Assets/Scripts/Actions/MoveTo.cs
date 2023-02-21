@@ -33,8 +33,8 @@ namespace Actions
                 ActiveObject.NextAction();
                 return;
             }
-
-            if (!_wasStarted || _destinationFinder != null && (_navMeshAgent.destination != nearestTarget.transform.position || nearestTarget == null))
+            
+            if (!_wasStarted || _destinationFinder != null && nearestTarget == null)
             {
                 if (_destinationFinder != null)
                 {
@@ -46,6 +46,7 @@ namespace Actions
                         return;
                     }
                 }
+
                 _navMeshAgent.stoppingDistance = _stoppingDistance;
                 _navMeshAgent.destination = _destinationFinder != null ? nearestTarget.transform.position : _destination;
                 _wasStarted = true;

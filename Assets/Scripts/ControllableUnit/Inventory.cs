@@ -13,6 +13,16 @@ namespace ControllableUnit
         [SerializeField] private int maxWood = 10;
         [SerializeField] private int maxStone = 10;
 
+        public int GetMaxResourceAmount(ResourceType resourceType)
+        {
+            return resourceType switch
+                {
+                    ResourceType.Wood => maxWood,
+                    ResourceType.Stone => maxStone,
+                    _ => 0
+                };
+        }
+        
         public int ResourcesUntilMax(ResourceType resourceType)
         {
             if (resourceTypeInHands == resourceType)
