@@ -1,5 +1,6 @@
 ﻿using Behaviours;
 using Building;
+using UI;
 using UnityEngine;
 using Behaviour = Behaviours.Behaviour;
 
@@ -8,11 +9,14 @@ namespace Targets
     public class BuildingConstruction : Target
     {
         [SerializeField] private BuildingTypeSo constructionInfo;
-        
+
+        [SerializeField] private CircleProgress constructionProgressUI;
         [SerializeField] private int constructionProgress;
 
         private void Update()
         {
+            constructionProgressUI.Show();
+            constructionProgressUI.ChangeProgress(constructionProgress * 1.0f / constructionInfo.constructionHealth);
             if (IsConstructed())
             {
                 Transform constructionTransform = transform;
