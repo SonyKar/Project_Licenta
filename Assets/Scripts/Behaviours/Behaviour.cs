@@ -8,7 +8,6 @@ namespace Behaviours
 {
     public abstract class Behaviour : MonoBehaviour // Visitor
     {
-        protected CircleProgress ActionProgress;
         protected ActionDoer ActiveObject;
         protected Inventory Inventory;
         protected Carrier Carrier;
@@ -17,7 +16,6 @@ namespace Behaviours
         
         private void Awake()
         {
-            ActionProgress = GetComponentInChildren<CircleProgress>();
             ActiveObject = GetComponent<ActionDoer>();
             Inventory = GetComponent<Inventory>();
             Carrier = GetComponent<Carrier>();

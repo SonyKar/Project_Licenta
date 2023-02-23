@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UI;
 using UnityEngine;
 using Action = Actions.Action;
 
@@ -7,6 +8,8 @@ namespace ControllableUnit
 {
     public class ActionDoer : MonoBehaviour
     {
+        [SerializeField] private CircleProgress actionProgress;
+        
         private readonly List<Action> _actions = new List<Action>();
         private Action _currentAction;
         private int _currentActionIndex;
@@ -40,6 +43,21 @@ namespace ControllableUnit
         public void StartNewCoroutine(IEnumerator enumerator)
         {
             StartCoroutine(enumerator);
+        }
+
+        public void ShowProgress()
+        {
+            actionProgress.Show();
+        }
+
+        public void HideProgress()
+        {
+            actionProgress.Hide();
+        }
+
+        public void UpdateProgress(float newValue)
+        {
+            actionProgress.ChangeProgress(newValue);
         }
     }
 }

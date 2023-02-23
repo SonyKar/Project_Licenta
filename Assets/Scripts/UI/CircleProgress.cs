@@ -14,11 +14,6 @@ namespace UI
             _camera = Camera.main;
         }
 
-        private void Start()
-        {
-            Hide();
-        }
-
         private void Update()
         {
             transform.LookAt(_camera.transform);

@@ -26,7 +26,7 @@ namespace Behaviours
                 return;
             }
             
-            Mine mine = new Mine(ActiveObject, ActionProgress, Inventory, (Mineable)tree, resourcesFromHit, secondsBetweenHits);
+            Mine mine = new Mine(ActiveObject, Inventory, (Mineable)tree, resourcesFromHit, secondsBetweenHits);
             ActiveObject.AddAction(mine);
 
             if (Carrier != null)
