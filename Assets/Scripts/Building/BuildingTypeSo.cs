@@ -10,6 +10,7 @@ namespace Building
         [Header("Prefab info")]
         public Transform prefab;
         public Transform constructionPrefab;
+        public Transform phantomPrefab;
         public int constructionHealth = 100;
         
         [Header("Requirements")]

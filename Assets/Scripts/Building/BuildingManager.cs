@@ -1,11 +1,11 @@
-﻿using UnityEngine;
+﻿using UI;
+using UnityEngine;
 
 namespace Building
 {
     public class BuildingManager : MonoBehaviour
     {
         [SerializeField] private BuildingTypeSo activeBuildingType;
-        [SerializeField] private Transform phantomPrefab;
         [SerializeField] private Transform buildingParent;
 
         private BoxCollider _constructionPrefabCollider;
@@ -26,7 +26,7 @@ namespace Building
         {
             if (Gameplay.Instance.GameMode == GameMode.Build)
             {
-                _phantom ??= Instantiate(phantomPrefab);
+                _phantom ??= Instantiate(activeBuildingType.phantomPrefab);
             }
             else if (_phantom is not null)
             {
@@ -39,17 +39,17 @@ namespace Building
         {
             if (!CanSpawnBuilding(raycastHit.point))
             {
-                Gameplay.Instance.ShowError("Cannot build here");
+                MessageHandler.Instance.ShowBuildingPlacementError();
                 return;
             }
             if (!raycastHit.transform.CompareTag("Ground"))
             {
-                Gameplay.Instance.ShowError("Cannot build here");
+                MessageHandler.Instance.ShowBuildingPlacementError();
                 return;
             }
             if (!ResourceManager.Instance.SpendResources(activeBuildingType.GetResourceRequirements()))
             {
-                Gameplay.Instance.ShowError("You don't have enough resources");
+                MessageHandler.Instance.ShowResourceError();
                 return;
             }
             
@@ -64,6 +64,11 @@ namespace Building
             Physics.OverlapBoxNonAlloc(position, _constructionPrefabCollider.size * 2, results, Quaternion.identity, ~LayerMask.GetMask("Ground", "Ignore Raycast"));
 
             return !results[0];
+        }
+
+        public void ChangeActiveBuildingType(BuildingTypeSo buildingTypeSo)
+        {
+            activeBuildingType = buildingTypeSo;
         }
     }
 }

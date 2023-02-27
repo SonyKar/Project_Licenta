@@ -3,6 +3,7 @@ using Behaviours;
 using Building;
 using JetBrains.Annotations;
 using Targets;
+using UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -94,11 +95,7 @@ public class Controller : MonoBehaviour
     [UsedImplicitly]
     public void OnToggleBuild()
     {
-        Gameplay.Instance.GameMode = Gameplay.Instance.GameMode == GameMode.Build ?
-        GameMode.Free :
-        GameMode.Build;
-        
-        BuildingManager.Instance.ToggleBuildMode();
+        BuildingMenu.Instance.ToggleBuildingMenu();
     }
 
     public static RaycastHit RayToMouse()

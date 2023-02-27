@@ -1,16 +1,11 @@
-using System.Collections;
+using Building;
 using ControllableUnit;
-using TMPro;
 using UnityEngine;
 
 public class Gameplay : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI errorText;
-    
-    public GameMode GameMode { get; set; } = GameMode.Free;
+    public GameMode GameMode { get; private set; } = GameMode.Free;
     public GameObject selectedObject;
-    
-    private Coroutine _errorMessageCoroutine;
 
     public static Gameplay Instance { get; private set; }
     void Awake()
@@ -34,16 +29,9 @@ public class Gameplay : MonoBehaviour
         clickedObjectSelectable.OnSelect();
     }
 
-    public void ShowError(string errorMessage)
+    public void ToggleBuildMode()
     {
-        if (_errorMessageCoroutine != null) StopCoroutine(_errorMessageCoroutine);
-        _errorMessageCoroutine = StartCoroutine(ShowErrorCoroutine(errorMessage));
-    }
-
-    private IEnumerator ShowErrorCoroutine(string errorMessage)
-    {
-        errorText.text = errorMessage;
-        yield return new WaitForSeconds(2);
-        errorText.text = "";
+        GameMode = GameMode == GameMode.Free ? GameMode.Build : GameMode.Free;
+        BuildingManager.Instance.ToggleBuildMode();
     }
 }
