@@ -7,6 +7,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 395050408, guid: 4528e83ab367fa545b26566ea4cc4b34, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 741690805, guid: 4528e83ab367fa545b26566ea4cc4b34, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 904760742, guid: 4528e83ab367fa545b26566ea4cc4b34, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2652604269508726433, guid: 4528e83ab367fa545b26566ea4cc4b34, type: 3}
       propertyPath: m_Name
       value: Townhall_Phantom
@@ -65,6 +77,8 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: c8e88aa6053f7524eb25d17b059a5393, type: 2}
     m_RemovedComponents:
     - {fileID: 658627182891491598, guid: 4528e83ab367fa545b26566ea4cc4b34, type: 3}
+    - {fileID: 6733545412519881290, guid: 4528e83ab367fa545b26566ea4cc4b34, type: 3}
+    - {fileID: 511379486, guid: 4528e83ab367fa545b26566ea4cc4b34, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4528e83ab367fa545b26566ea4cc4b34, type: 3}
 --- !u!1 &6167056673748765092 stripped
 GameObject:
