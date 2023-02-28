@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1ba93a855be4ab1a1962e0a41144f9d, type: 3}
+  m_Name: Townhall
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 2652604269508726445, guid: 4528e83ab367fa545b26566ea4cc4b34, type: 3}
+  constructionPrefab: {fileID: 8906668255494673134, guid: d77f58fb59abc62498c09fa94e051fbc, type: 3}
+  phantomPrefab: {fileID: 6167056673748765096, guid: 0ae37685960ae554e8293d2b46060a59, type: 3}
+  constructionHealth: 200
+  wood: 100
+  stone: 100

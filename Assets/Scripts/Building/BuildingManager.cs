@@ -54,7 +54,7 @@ namespace Building
             }
             
             Vector3 point = raycastHit.point;
-            point.y = 0.5f;
+            point.y = activeBuildingType.constructionPrefab.localScale.y / 2;
             Instantiate((Object)activeBuildingType.constructionPrefab, point, Quaternion.identity, buildingParent);
         }
         
