@@ -15,14 +15,16 @@ namespace Actions
         private bool _wasStarted;
         private readonly int _stoppingDistance;
         private Target nearestTarget;
+        private readonly bool _clearActionQueueOnStop;
 
-        public MoveTo(ActionDoer activeObject, NavMeshAgent navMeshAgent, Vector3 destination, int stoppingDistance = 0, Func<Vector3, Target> destinationFinder = null)
+        public MoveTo(ActionDoer activeObject, NavMeshAgent navMeshAgent, Vector3 destination, int stoppingDistance = 0, Func<Vector3, Target> destinationFinder = null, bool clearActionQueueOnStop = false)
         : base(activeObject)
         {
             _navMeshAgent = navMeshAgent;
             _stoppingDistance = stoppingDistance;
             _destination = destination;
             _destinationFinder = destinationFinder;
+            _clearActionQueueOnStop = clearActionQueueOnStop;
         }
         
         public override void Do()
@@ -30,8 +32,14 @@ namespace Actions
             if (_wasStarted && _navMeshAgent.remainingDistance < _navMeshAgent.stoppingDistance + 0.1f)
             {
                 _wasStarted = false;
-                ActiveObject.NextAction();
+                if (_clearActionQueueOnStop) ActiveObject.ClearActionQueue();
+                else ActiveObject.NextAction();
                 return;
+            }
+
+            if (!_wasStarted)
+            {
+                ActiveObject.GetAnimator().SetWalkingAnimation();
             }
             
             if (!_wasStarted || _destinationFinder != null && nearestTarget == null)

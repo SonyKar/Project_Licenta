@@ -24,7 +24,7 @@ namespace Behaviours
             }
             Walker.MoveToObject(sawmill);
 
-            StockResource stockResource = new StockResource(ActiveObject, Inventory);
+            StockResource stockResource = new StockResource(ActiveObject, Inventory, true);
             ActiveObject.AddAction(stockResource);
         }
     }

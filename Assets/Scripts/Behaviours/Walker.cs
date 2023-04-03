@@ -7,14 +7,16 @@ namespace Behaviours
 {
     public class Walker : Behaviour
     {
-        public void MoveToObject(Target target)
+        [SerializeField] private int stoppingDistance = 2;
+        
+        public void MoveToObject(Target target, bool clearActionQueueOnStop = false)
         {
             if (NavMeshAgent == null)
             {
                 Debug.Log("No NavMeshAgent");
                 return;
             }
-            MoveTo moveToMe = new MoveTo(ActiveObject, NavMeshAgent, target.transform.position, 3);
+            MoveTo moveToMe = new MoveTo(ActiveObject, NavMeshAgent, target.transform.position, stoppingDistance, clearActionQueueOnStop: clearActionQueueOnStop);
             ActiveObject.AddAction(moveToMe);
         }
 
@@ -25,20 +27,20 @@ namespace Behaviours
                 Debug.Log("No NavMeshAgent");
                 return;
             }
-            MoveTo moveToMe = new MoveTo(ActiveObject, NavMeshAgent, Vector3.zero, 3, destinationFinder);
+            MoveTo moveToMe = new MoveTo(ActiveObject, NavMeshAgent, Vector3.zero, stoppingDistance, destinationFinder);
             ActiveObject.AddAction(moveToMe);
         }
         
         public override void DoForTree(Target tree, bool doCleanActionQueue = true)
         {
             if (doCleanActionQueue) ActiveObject.ClearActionQueue();
-            MoveToObject(tree);
+            MoveToObject(tree, true);
         }
         
         public override void DoForSawmill(Target sawmill, bool doCleanActionQueue = true)
         {
             if (doCleanActionQueue) ActiveObject.ClearActionQueue();
-            MoveToObject(sawmill);
+            MoveToObject(sawmill, true);
         }
 
         public void DoForGround(Vector3 destination)
@@ -49,7 +51,7 @@ namespace Behaviours
                 return;
             }
             ActiveObject.ClearActionQueue();
-            MoveTo moveTo = new MoveTo(ActiveObject, NavMeshAgent, destination);
+            MoveTo moveTo = new MoveTo(ActiveObject, NavMeshAgent, destination, clearActionQueueOnStop: true);
             ActiveObject.AddAction(moveTo);
         }
     }

@@ -39,6 +39,8 @@ namespace Actions
                 _inventory.GetMaxResourceAmount(_inventory.GetCurrentResourceType())
             );
             ActiveObject.ShowProgress();
+            ActiveObject.transform.LookAt(_mineable.transform);
+            ActiveObject.GetAnimator().SetChoppingAnimation();
 
             while (true)
             {
@@ -61,8 +63,7 @@ namespace Actions
                     _inventory.GetMaxResourceAmount(_inventory.GetCurrentResourceType())
                 );
             }
-
-            ActiveObject.HideProgress();
+            
             _isMining = false;
             if (_mineable.IsDepleted())
             {
