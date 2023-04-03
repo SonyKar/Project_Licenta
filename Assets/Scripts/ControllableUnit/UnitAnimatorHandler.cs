@@ -20,6 +20,7 @@ namespace ControllableUnit
 
         public void SetChoppingAnimation()
         {
+            EmptyHands();
             axe.SetActive(true);
             animator.SetBool(IsChopping, true);
         }
