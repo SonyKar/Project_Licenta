@@ -29,11 +29,15 @@ namespace Actions
         
         private IEnumerator Construct()
         {
+            ActiveObject.transform.LookAt(_construction.transform);
+            ActiveObject.GetAnimator().SetBuildingAnimation();
+            
             while (true)
             {
                 _isBuilding = true;
-                yield return new WaitForSeconds(_secondsBetweenHits);
                 if (_construction is null || _construction.IsConstructed()) break;
+                yield return new WaitForSeconds(_secondsBetweenHits);
+                // if (_construction is null || _construction.IsConstructed()) break;
 
                 _construction.BuildTick(_healthToAdd);
             }

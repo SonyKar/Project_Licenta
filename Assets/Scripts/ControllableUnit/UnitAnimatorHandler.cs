@@ -13,10 +13,14 @@ namespace ControllableUnit
         [Header("Carry")]
         [SerializeField] private Inventory inventory;
         [SerializeField] private GameObject woodStack;
+
+        [Header("Building")]
+        [SerializeField] private GameObject hammer;
         
         private readonly static int IsChopping = Animator.StringToHash("isChopping");
         private readonly static int IsWalking = Animator.StringToHash("isWalking");
         private readonly static int IsCarrying = Animator.StringToHash("isCarrying");
+        private readonly static int IsBuilding = Animator.StringToHash("isBuilding");
 
         public void SetChoppingAnimation()
         {
@@ -42,6 +46,13 @@ namespace ControllableUnit
             animator.SetBool(IsCarrying, true);
         }
         
+        public void SetBuildingAnimation()
+        {
+            EmptyHands();
+            hammer.SetActive(true);
+            animator.SetBool(IsBuilding, true);
+        }
+
         public void SetWalkingAnimation()
         {
             animator.SetBool(IsWalking, true);
@@ -51,11 +62,13 @@ namespace ControllableUnit
         {
             axe.SetActive(false);
             woodStack.SetActive(false);
+            hammer.SetActive(false);
         }
         
         public void ClearAnimation()
         {
             animator.SetBool(IsChopping, false);
+            animator.SetBool(IsBuilding, false);
             animator.SetBool(IsWalking, false);
             
             EmptyHands();
