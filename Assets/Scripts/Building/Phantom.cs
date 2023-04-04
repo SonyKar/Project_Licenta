@@ -13,13 +13,13 @@ namespace Building
         private void Awake()
         {
             _transform = transform;
-            _meshRenderer = GetComponent<MeshRenderer>();
+            _meshRenderer = GetComponentInChildren<MeshRenderer>();
         }
 
         private void Update()
         {
             Vector3 newPos = Controller.RayToMouse().point;
-            newPos.y = _transform.localScale.y / 2;
+            newPos.y = 0;
             _transform.position = newPos;
             
             _meshRenderer.material = BuildingManager.Instance.CanSpawnBuilding(_transform.position) ? okMaterial : errorMaterial;

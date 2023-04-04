@@ -1,5 +1,7 @@
-﻿using UI;
+﻿using System;
+using UI;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Building
 {
@@ -54,14 +56,14 @@ namespace Building
             }
             
             Vector3 point = raycastHit.point;
-            point.y = activeBuildingType.constructionPrefab.localScale.y / 2;
+            point.y = 0;
             Instantiate((Object)activeBuildingType.constructionPrefab, point, Quaternion.identity, buildingParent);
         }
         
         public bool CanSpawnBuilding(Vector3 position)
         {
             Collider[] results = new Collider[1];
-            Physics.OverlapBoxNonAlloc(position, _constructionPrefabCollider.size * 2, results, Quaternion.identity, ~LayerMask.GetMask("Ground", "Ignore Raycast"));
+            Physics.OverlapBoxNonAlloc(position, _constructionPrefabCollider.size / 2, results, Quaternion.identity, ~LayerMask.GetMask("Ground", "Ignore Raycast"));
 
             return !results[0];
         }
