@@ -87,6 +87,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resourcesFromHit: 3
   secondsBetweenHits: 1.5
+  secondsBeforeReactionAnimation: 0.75
+  secondsToEndAnimation: 1
 --- !u!114 &5032585304446666598
 MonoBehaviour:
   m_ObjectHideFlags: 0

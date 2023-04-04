@@ -17,6 +17,7 @@ namespace ControllableUnit
         [Header("Building")]
         [SerializeField] private GameObject hammer;
         
+        private readonly static int Chop = Animator.StringToHash("Chop");
         private readonly static int IsChopping = Animator.StringToHash("isChopping");
         private readonly static int IsWalking = Animator.StringToHash("isWalking");
         private readonly static int IsCarrying = Animator.StringToHash("isCarrying");
@@ -24,9 +25,15 @@ namespace ControllableUnit
 
         public void SetChoppingAnimation()
         {
+            animator.SetTrigger(Chop);
+        }
+
+        public void PrepareToChop()
+        {
             EmptyHands();
             axe.SetActive(true);
             animator.SetBool(IsChopping, true);
+            animator.SetBool(IsCarrying, false);
         }
         
         private void SetCarryingAnimation()
@@ -67,9 +74,9 @@ namespace ControllableUnit
         
         public void ClearAnimation()
         {
-            animator.SetBool(IsChopping, false);
             animator.SetBool(IsBuilding, false);
             animator.SetBool(IsWalking, false);
+            animator.SetBool(IsChopping, false);
             
             EmptyHands();
             SetCarryingAnimation();

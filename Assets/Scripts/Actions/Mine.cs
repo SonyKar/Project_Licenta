@@ -13,14 +13,18 @@ namespace Actions
         private readonly Inventory _inventory;
         private readonly int _damage;
         private readonly float _secondsBetweenHits;
+        private readonly float _secondsBeforeReactionAnimation;
+        private readonly float _secondsToEndAnimation;
         private bool _isMining;
 
-        public Mine(ActionDoer actionDoer, Inventory inventory, Mineable mineable, int damage, float secondsBetweenHits)
+        public Mine(ActionDoer actionDoer, Inventory inventory, Mineable mineable, int damage, float secondsBetweenHits, float secondsBeforeReactionAnimation, float secondsToEndAnimation)
         : base(actionDoer)
         {
             _mineable = mineable;
             _damage = damage;
             _secondsBetweenHits = secondsBetweenHits;
+            _secondsBeforeReactionAnimation = secondsBeforeReactionAnimation;
+            _secondsToEndAnimation = secondsToEndAnimation;
             _inventory = inventory;
         }
         
@@ -40,15 +44,20 @@ namespace Actions
             );
             ActiveObject.ShowProgress();
             ActiveObject.transform.LookAt(_mineable.transform);
-            ActiveObject.GetAnimator().SetChoppingAnimation();
+            ActiveObject.GetAnimator().PrepareToChop();
 
             while (true)
             {
                 _isMining = true;
                 int resourcesToGet = _inventory.ResourcesUntilMax(_mineable.GetResourceType());
                 if (resourcesToGet <= 0) break;
-                
-                yield return new WaitForSeconds(_secondsBetweenHits);
+
+                float timeToWait = _secondsBetweenHits > _secondsToEndAnimation ?
+                _secondsBetweenHits :
+                _secondsToEndAnimation;
+                yield return new WaitForSeconds(timeToWait);
+                ActiveObject.GetAnimator().SetChoppingAnimation();
+                yield return new WaitForSeconds(_secondsBeforeReactionAnimation);
                 
                 if (_mineable.IsDepleted()) break;
                 if (resourcesToGet >= _damage) resourcesToGet = _damage;
@@ -63,7 +72,7 @@ namespace Actions
                     _inventory.GetMaxResourceAmount(_inventory.GetCurrentResourceType())
                 );
             }
-            
+
             _isMining = false;
             if (_mineable.IsDepleted())
             {
