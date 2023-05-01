@@ -82,7 +82,7 @@ public class ResourceManager : MonoBehaviour
     
     private void UpdateResourcesUI()
     {
-        woodText.text = "Wood: " + wood;
-        stoneText.text = "Stone: " + stone;
+        woodText.text = "" + wood;
+        stoneText.text = "" + stone;
     }
 }

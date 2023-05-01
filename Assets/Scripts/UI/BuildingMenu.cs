@@ -1,14 +1,16 @@
 using Building;
 using JetBrains.Annotations;
-using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UI
 {
     public class BuildingMenu : MonoBehaviour
     {
         [SerializeField] private GameObject buildingMenu;
-        [SerializeField] private TextMeshProUGUI buildingButtonText;
+        [SerializeField] private Image buildButtonImage;
+        [SerializeField] private Sprite buildSprite;
+        [SerializeField] private Sprite cancelSprite;
 
         public static BuildingMenu Instance { get; private set; }
         void Awake()
@@ -25,7 +27,7 @@ namespace UI
             if (Gameplay.Instance.GameMode == GameMode.Build)
             {
                 Gameplay.Instance.ToggleBuildMode();
-                buildingButtonText.SetText("Build");
+                buildButtonImage.sprite = buildSprite;
             }
             else buildingMenu.SetActive(!buildingMenu.activeSelf);
         }
@@ -33,7 +35,7 @@ namespace UI
         [UsedImplicitly]
         public void Build(BuildingTypeSo buildingTypeSo)
         {
-            buildingButtonText.SetText("Cancel");
+            buildButtonImage.sprite = cancelSprite;
             BuildingManager.Instance.ChangeActiveBuildingType(buildingTypeSo);
             
             ToggleBuildingMenu();
