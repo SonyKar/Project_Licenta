@@ -35,10 +35,13 @@ namespace Actions
             while (true)
             {
                 _isBuilding = true;
+                
+                // to stop animation then unit finishes building
                 if (_construction is null || _construction.IsConstructed()) break;
                 yield return new WaitForSeconds(_secondsBetweenHits);
-                // if (_construction is null || _construction.IsConstructed()) break;
-
+                
+                // to eliminate null pointer exception if building is constructed with 2 or more units
+                if (_construction is null || _construction.IsConstructed()) break;
                 _construction.BuildTick(_healthToAdd);
             }
 

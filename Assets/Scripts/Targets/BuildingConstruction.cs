@@ -12,6 +12,7 @@ namespace Targets
 
         [SerializeField] private CircleProgress constructionProgressUI;
         [SerializeField] private int constructionProgress;
+        [SerializeField] private ParticleSystem constructionFog;
 
         private void Update()
         {
@@ -27,6 +28,10 @@ namespace Targets
 
         public void BuildTick(int healthToAdd)
         {
+            if (constructionFog is not null)
+            {
+                constructionFog.Play();
+            }
             constructionProgress += healthToAdd;
         }
 
