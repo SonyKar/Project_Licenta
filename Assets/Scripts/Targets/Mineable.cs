@@ -24,6 +24,7 @@ namespace Targets
             
             if (health <= 0)
             {
+                // TODO add depleted visual iteraction
                 health = 0;
                 isDepleted = true;
             }

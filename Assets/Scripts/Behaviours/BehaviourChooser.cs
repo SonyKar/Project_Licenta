@@ -23,5 +23,11 @@ namespace Behaviours
             Behaviour behaviour = gameObject.GetComponent<Builder>() ?? (Behaviour)gameObject.GetComponent<Walker>();
             return behaviour;
         }
+        
+        public Behaviour ChooseBehaviour(NonInteractableBuilding building)
+        {
+            Behaviour behaviour = gameObject.GetComponent<Walker>();
+            return behaviour;
+        }
     }
 }

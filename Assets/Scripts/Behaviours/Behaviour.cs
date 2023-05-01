@@ -36,5 +36,10 @@ namespace Behaviours
         {
             
         }
+
+        public virtual void DoForNonInteractableBuilding(NonInteractableBuilding nonInteractableBuilding, bool doCleanActionQueue = true)
+        {
+            
+        }
     }
 }

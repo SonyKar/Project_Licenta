@@ -16,7 +16,14 @@ namespace Behaviours
                 Debug.Log("No NavMeshAgent");
                 return;
             }
-            MoveTo moveToMe = new MoveTo(ActiveObject, NavMeshAgent, target.transform.position, stoppingDistance, clearActionQueueOnStop: clearActionQueueOnStop);
+
+            Collider collider = target.GetComponent<Collider>();
+            if (collider is null)
+            {
+                Debug.Log(target.name + " does not have Collider");
+                return;
+            }
+            MoveTo moveToMe = new MoveTo(ActiveObject, NavMeshAgent, collider.ClosestPointOnBounds(ActiveObject.transform.position), stoppingDistance, clearActionQueueOnStop: clearActionQueueOnStop);
             ActiveObject.AddAction(moveToMe);
         }
 
@@ -41,6 +48,18 @@ namespace Behaviours
         {
             if (doCleanActionQueue) ActiveObject.ClearActionQueue();
             MoveToObject(sawmill, true);
+        }
+
+        public override void DoForConstruction(Target construction, bool doCleanActionQueue = true)
+        {
+            if (doCleanActionQueue) ActiveObject.ClearActionQueue();
+            MoveToObject(construction, true);
+        }
+        
+        public override void DoForNonInteractableBuilding(NonInteractableBuilding nonInteractableBuilding, bool doCleanActionQueue = true)
+        {
+            if (doCleanActionQueue) ActiveObject.ClearActionQueue();
+            MoveToObject(nonInteractableBuilding, true);
         }
 
         public void DoForGround(Vector3 destination)

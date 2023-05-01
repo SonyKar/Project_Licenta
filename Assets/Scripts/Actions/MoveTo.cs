@@ -10,11 +10,11 @@ namespace Actions
     {
         private readonly NavMeshAgent _navMeshAgent;
         
-        private readonly Vector3 _destination;
+        private Vector3 _destination;
         private readonly Func<Vector3, Target> _destinationFinder;
         private bool _wasStarted;
         private readonly int _stoppingDistance;
-        private Target nearestTarget;
+        private Target _nearestTarget;
         private readonly bool _clearActionQueueOnStop;
 
         public MoveTo(ActionDoer activeObject, NavMeshAgent navMeshAgent, Vector3 destination, int stoppingDistance = 0, Func<Vector3, Target> destinationFinder = null, bool clearActionQueueOnStop = false)
@@ -42,21 +42,28 @@ namespace Actions
                 ActiveObject.GetAnimator().SetWalkingAnimation();
             }
             
-            if (!_wasStarted || _destinationFinder != null && nearestTarget == null)
+            if (!_wasStarted || _destinationFinder != null && _nearestTarget == null)
             {
                 if (_destinationFinder != null)
                 {
-                    nearestTarget = _destinationFinder(_navMeshAgent.gameObject.transform.position);
-                    if (nearestTarget is null)
+                    _nearestTarget = _destinationFinder(_navMeshAgent.gameObject.transform.position);
+                    if (_nearestTarget is null)
                     {
                         _navMeshAgent.destination = _navMeshAgent.transform.position;
                         ActiveObject.ClearActionQueue();
                         return;
                     }
+                    Collider collider = _nearestTarget.GetComponent<Collider>();
+                    if (collider is null)
+                    {
+                        Debug.Log(_nearestTarget.name + " does not have Collider");
+                        return;
+                    }
+                    _destination = collider.ClosestPointOnBounds(ActiveObject.transform.position);
                 }
 
                 _navMeshAgent.stoppingDistance = _stoppingDistance;
-                _navMeshAgent.destination = _destinationFinder != null ? nearestTarget.transform.position : _destination;
+                _navMeshAgent.destination = _destination;
                 _wasStarted = true;
             }
         }
