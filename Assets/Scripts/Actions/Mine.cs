@@ -45,6 +45,7 @@ namespace Actions
             ActiveObject.ShowProgress();
             ActiveObject.transform.LookAt(_mineable.transform);
             ActiveObject.GetAnimator().PrepareToChop();
+            AudioSource audioSource = ActiveObject.GetAudioSource();
 
             while (true)
             {
@@ -62,6 +63,7 @@ namespace Actions
                 if (_mineable.IsDepleted()) break;
                 if (resourcesToGet >= _damage) resourcesToGet = _damage;
                 
+                audioSource.Play();
                 ResourceBundle collectedResources = _mineable.TakeHit(resourcesToGet);
                 if (!_inventory.AddResources(collectedResources))
                 {

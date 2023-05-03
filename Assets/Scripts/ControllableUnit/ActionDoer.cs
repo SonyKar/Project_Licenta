@@ -10,6 +10,7 @@ namespace ControllableUnit
     {
         [SerializeField] private CircleProgress actionProgress;
         [SerializeField] private UnitAnimatorHandler animator;
+        [SerializeField] private AudioSource audioSource;
         
         private readonly List<Action> _actions = new List<Action>();
         private Action _currentAction;
@@ -38,6 +39,11 @@ namespace ControllableUnit
         public UnitAnimatorHandler GetAnimator()
         {
             return animator;
+        }
+
+        public AudioSource GetAudioSource()
+        {
+            return audioSource;
         }
 
         public void ClearActionQueue()
