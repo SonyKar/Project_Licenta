@@ -7,11 +7,17 @@ namespace Targets
 {
     public abstract class Mineable : Target
     {
+        [Header("General Info")]
         [SerializeField] private bool isDepleted;
         [SerializeField] private int health = 1;
         [SerializeField] private ResourceType resourceType;
+        [Header("Animation Info")]
         [SerializeField] private Animator animator;
         [SerializeField] private string triggerName;
+        [Header("Visuals")]
+        [SerializeField] private Collider colliderToRemove;
+        [SerializeField] private GameObject depletedModel;
+        [SerializeField] private GameObject initialModel;
 
         public abstract override Behaviour BestBehaviour(BehaviourChooser behaviourChooser);
         public abstract override void Behave(Behaviour behaviour);
@@ -24,7 +30,9 @@ namespace Targets
             
             if (health <= 0)
             {
-                // TODO add depleted visual iteraction
+                colliderToRemove.enabled = false;
+                initialModel.SetActive(false);
+                depletedModel.SetActive(true);
                 health = 0;
                 isDepleted = true;
             }
