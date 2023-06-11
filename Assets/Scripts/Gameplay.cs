@@ -6,6 +6,7 @@ public class Gameplay : MonoBehaviour
 {
     public GameMode GameMode { get; private set; } = GameMode.Free;
     public GameObject selectedObject;
+    public GameObject unitParent;
 
     public static Gameplay Instance { get; private set; }
     void Awake()

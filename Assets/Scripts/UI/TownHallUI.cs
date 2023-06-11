@@ -9,7 +9,6 @@ namespace UI
         [SerializeField] private Image menuUI;
         [SerializeField] private Transform spawnPoint;
         [SerializeField] private GameObject unitPrefab;
-        [SerializeField] private Transform unitParent;
 
         private Camera _mainCamera;
 
@@ -26,7 +25,7 @@ namespace UI
         [UsedImplicitly]
         public void CreateNewUnit()
         {
-            Instantiate(unitPrefab, spawnPoint.position, Quaternion.identity, unitParent);
+            Instantiate(unitPrefab, spawnPoint.position, Quaternion.identity, Gameplay.Instance.unitParent.transform);
         }
     }
 }
